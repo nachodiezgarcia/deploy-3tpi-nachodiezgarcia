@@ -33,11 +33,14 @@ RUN npx turbo build --filter=@intermodular/web
 # ── Stage 2: Runtime ──────────────────────────────────────────────────────────
 FROM node:22-alpine
 
-# Copiamos dist/ completo: dist/server/server.js (SSR) + dist/client/ (assets).
-# El servidor sirve los assets estáticos desde dist/client/ en runtime.
-COPY --from=builder /monorepo/apps/web/dist /app/dist
-
 WORKDIR /app
+
+# El bundle SSR de TanStack Start externaliza react y otras deps en vez de
+# incluirlas en el bundle — necesitamos node_modules disponibles en runtime.
+COPY --from=builder /monorepo/node_modules ./node_modules
+
+# Copiamos dist/ completo: dist/server/server.js (SSR) + dist/client/ (assets).
+COPY --from=builder /monorepo/apps/web/dist ./dist
 
 # TanStack Start respeta la variable de entorno PORT (por defecto 3000).
 EXPOSE 3000
