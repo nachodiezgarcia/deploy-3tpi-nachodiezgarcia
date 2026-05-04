@@ -1,0 +1,15 @@
+{
+  "extends": "@intermodular/typescript-config/node",
+  "include": ["src"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "noEmit": false,
+    "paths": {
+      "#*": ["./src/*"]
+    }
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true
+  }
+}

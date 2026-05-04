@@ -1,0 +1,41 @@
+# Contexto de build Docker para la imagen de apps/web (multi-stage).
+# Este fichero va en la raíz del monorepo porque el contexto es el monorepo
+# completo (necesario para npm workspaces y turbo).
+
+# Dependencias — se instalan dentro de Docker con npm ci
+**/node_modules
+
+# Caché de turbo
+**/.turbo
+
+# Outputs de builds anteriores — Docker los genera internamente
+**/dist
+**/.output
+
+# Apps que no son necesarias para compilar la web
+apps/api
+apps/console-runner
+
+# Variables de entorno locales (NUNCA deben entrar en la imagen)
+**/.env
+**/.env.local
+**/.env.example
+**/.env.*.local
+
+# Control de versiones
+.git
+.gitignore
+.gitattributes
+
+# Logs
+*.log
+npm-debug.log*
+
+# Documentación y configuración del editor
+*.md
+.editorconfig
+.vscode
+
+# Ficheros generados de TanStack Router (se regeneran en el build)
+**/routeTree.gen.ts
+**/.tanstack

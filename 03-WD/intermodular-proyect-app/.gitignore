@@ -1,0 +1,15 @@
+.claude/settings.local.json
+.DS_Store
+node_modules/
+dist/
+.turbo/
+.output/
+.env
+.env.local
+.env.*.local
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+Thumbs.db
+coverage/
+**/routeTree.gen.ts

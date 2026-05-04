@@ -1,0 +1,31 @@
+{
+  "name": "@intermodular/monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "npm@11.4.2",
+  "engines": {
+    "node": ">=22",
+    "npm": ">=11"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "turbo dev",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "lint": "oxlint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.17",
+    "oxlint": "^1.59.0",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "turbo": "^2.9.5",
+    "typescript": "~6.0.2"
+  }
+}

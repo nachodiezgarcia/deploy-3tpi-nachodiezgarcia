@@ -1,0 +1,72 @@
+# =============================================================================
+# CD: Docker build (multi-stage) → push a GHCR → Deploy a Render
+# =============================================================================
+#
+# El Dockerfile hace el build completo en dos stages:
+#   Stage 1 (builder): npm ci + turbo build → genera apps/web/dist/
+#   Stage 2 (runtime): imagen mínima con solo el servidor compilado
+#
+# Al hacer el build dentro de Docker no dependemos de dónde CI deja los
+# archivos — el contexto es el monorepo completo y Docker lo gestiona todo.
+#
+# Secretos necesarios en Settings > Secrets > Actions:
+#   - IMAGE_NAME             → ej: ghcr.io/nachodiezgarcia/3tpi-nachodiezgarcia
+#   - IMAGE_TAG              → ej: latest
+#   - RENDER_DEPLOY_HOOK_URL → URL del deploy hook de Render (web service)
+#
+# Variables de entorno de la app (configurar en Render, no aquí):
+#   - PUBLIC_API_BASE_URL    → URL pública de la API (runtime)
+#
+# El secreto GITHUB_TOKEN lo provee GitHub automáticamente.
+# =============================================================================
+
+name: CD
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: cd-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build, push & deploy
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # ── 1. Clona el repositorio ────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Autentica en GitHub Container Registry ─────────────────────────
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 3. Construye la imagen (multi-stage: instala, compila y empaqueta)
+      #       y la publica en GHCR. El contexto es la raíz del monorepo para
+      #       que npm workspaces y turbo funcionen correctamente. ─────────────
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./03-WD/intermodular-proyect-app
+          file: ./03-WD/intermodular-proyect-app/apps/web/Dockerfile
+          push: true
+          tags: ${{ secrets.IMAGE_NAME }}:${{ secrets.IMAGE_TAG }}
+
+      # ── 4. Notifica a Render para que arranque el nuevo contenedor ─────────
+      - name: Trigger Render deploy
+        run: |
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            --fail \
+            "${{ secrets.RENDER_DEPLOY_HOOK_URL }}")
+          echo "Render deploy hook responded with HTTP $HTTP_STATUS"

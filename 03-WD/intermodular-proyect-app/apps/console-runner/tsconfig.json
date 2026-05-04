@@ -1,0 +1,9 @@
+{
+  "extends": "@intermodular/typescript-config/node",
+  "include": ["src"],
+  "compilerOptions": {
+    "paths": {
+      "#*": ["./src/*"]
+    }
+  }
+}
