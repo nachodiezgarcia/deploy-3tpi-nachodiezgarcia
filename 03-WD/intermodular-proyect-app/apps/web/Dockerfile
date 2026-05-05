@@ -14,6 +14,9 @@ FROM node:22-alpine AS builder
 
 WORKDIR /monorepo
 
+# node:22-alpine trae npm 10; el proyecto requiere npm >= 11 (lockfileVersion 3).
+RUN npm install -g npm@11 --quiet
+
 # Copiamos los manifests primero para aprovechar la cache de capas de Docker.
 # Si solo cambia el código fuente, las capas de install no se reconstruyen.
 COPY package.json package-lock.json turbo.json ./
@@ -53,4 +56,4 @@ WORKDIR /app/apps/web
 # TanStack Start respeta la variable de entorno PORT (por defecto 3000).
 EXPOSE 3000
 
-CMD ["node", "dist/server/server.js"]
+CMD ["sh", "-c", "node --version && echo 'PORT='$PORT && ls dist/server/ && exec node dist/server/server.js"]
