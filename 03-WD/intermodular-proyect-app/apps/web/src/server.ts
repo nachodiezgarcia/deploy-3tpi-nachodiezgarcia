@@ -28,8 +28,15 @@ function readBody(req: IncomingMessage): Promise<Buffer | null> {
 
 createServer(async (req: IncomingMessage, res: ServerResponse) => {
   try {
-    const host = req.headers.host ?? `localhost:${PORT}`;
-    const url = `http://${host}${req.url ?? '/'}`;
+    const forwardedProto = req.headers['x-forwarded-proto'];
+    const protocol = Array.isArray(forwardedProto)
+      ? forwardedProto[0]
+      : (forwardedProto?.split(',')[0]?.trim() ?? 'http');
+    const forwardedHost = req.headers['x-forwarded-host'];
+    const host = Array.isArray(forwardedHost)
+      ? forwardedHost[0]
+      : (forwardedHost ?? req.headers.host ?? `localhost:${PORT}`);
+    const url = `${protocol}://${host}${req.url ?? '/'}`;
     const body = await readBody(req);
 
     const headers = new Headers();
