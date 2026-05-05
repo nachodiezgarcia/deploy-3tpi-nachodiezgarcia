@@ -35,12 +35,20 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-# El bundle SSR de TanStack Start externaliza react y otras deps en vez de
-# incluirlas en el bundle — necesitamos node_modules disponibles en runtime.
+# Reproducimos la estructura del workspace para que Node.js resuelva módulos
+# correctamente (hoisting de node_modules + "type":"module" del package.json).
+COPY --from=builder /monorepo/package.json ./package.json
+COPY --from=builder /monorepo/apps/web/package.json ./apps/web/package.json
+
+# El bundle SSR externaliza react y otras deps — necesitamos node_modules en runtime.
 COPY --from=builder /monorepo/node_modules ./node_modules
 
 # Copiamos dist/ completo: dist/server/server.js (SSR) + dist/client/ (assets).
-COPY --from=builder /monorepo/apps/web/dist ./dist
+COPY --from=builder /monorepo/apps/web/dist ./apps/web/dist
+
+# El servidor se ejecuta desde el directorio de la app para que las rutas
+# relativas (dist/client/) y la resolución de módulos funcionen igual que en build.
+WORKDIR /app/apps/web
 
 # TanStack Start respeta la variable de entorno PORT (por defecto 3000).
 EXPOSE 3000
