@@ -146,14 +146,33 @@ async function tryProxyApiRequest(
     }
   }
 
-  const apiRes = await fetch(`${API_BASE_URL}${rawPath}`, {
-    method,
-    headers,
-    body: body !== null && body.length > 0 ? new Uint8Array(body) : undefined,
-    redirect: 'manual',
-  });
+  try {
+    const apiRes = await fetch(`${API_BASE_URL}${rawPath}`, {
+      method,
+      headers,
+      body: body !== null && body.length > 0 ? new Uint8Array(body) : undefined,
+      redirect: 'manual',
+    });
 
-  await sendWebResponse(res, apiRes);
+    await sendWebResponse(res, apiRes);
+  } catch (error) {
+    console.error('[api-proxy] failed request', {
+      target: `${API_BASE_URL}${rawPath}`,
+      method,
+      error,
+    });
+
+    if (!res.headersSent) {
+      res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(
+        JSON.stringify({
+          message:
+            'No se pudo contactar con la API backend. Revisa PUBLIC_API_BASE_URL y conectividad.',
+        }),
+      );
+    }
+  }
+
   return true;
 }
 
