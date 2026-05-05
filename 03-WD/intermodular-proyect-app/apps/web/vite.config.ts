@@ -8,6 +8,9 @@ export default defineConfig({
     tailwindcss(),
     tanstackStart({
       routesDirectory: 'src/routes',
+      server: {
+        entry: './src/server.ts',
+      },
     }),
     viteReact(),
   ],
