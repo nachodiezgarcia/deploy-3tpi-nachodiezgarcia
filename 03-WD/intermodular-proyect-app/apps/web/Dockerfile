@@ -56,4 +56,4 @@ WORKDIR /app/apps/web
 # TanStack Start respeta la variable de entorno PORT (por defecto 3000).
 EXPOSE 3000
 
-CMD ["sh", "-c", "node --version && echo 'PORT='$PORT && ls dist/server/ && exec node dist/server/server.js"]
+CMD ["node", "dist/server/server.js"]
