@@ -11,6 +11,8 @@ import {
 const handler = createStartHandler({ handler: defaultStreamHandler });
 const PORT = Number(process.env['PORT'] ?? 3000);
 
+console.log('[server-entry] custom src/server.ts loaded');
+
 function readBody(req: IncomingMessage): Promise<Buffer | null> {
   if (req.method === 'GET' || req.method === 'HEAD')
     return Promise.resolve(null);
