@@ -4,7 +4,7 @@ import {
   redirect,
   useNavigate,
 } from '@tanstack/react-router';
-import { LogOut } from 'lucide-react';
+import { LogOut, MessageCircle } from 'lucide-react';
 import { $auth, refreshSessionFn, logoutFn } from '#pods/auth';
 import { AppHeader } from '#common/components/layout';
 
@@ -39,15 +39,30 @@ function AuthLayout() {
     >
       <AppHeader onLogout={handleLogout} user={session.user} />
       <Outlet />
-      <button
-        type="button"
-        aria-label="Cerrar sesión"
-        onClick={handleLogout}
-        className="fixed bottom-4 right-4 z-50 flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-tsecondary-500 shadow-md transition hover:text-tbase-500"
-      >
-        <LogOut size={16} />
-        <span>Cerrar sesión</span>
-      </button>
+      <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2">
+        <button
+          type="button"
+          aria-label="Abrir mentor IA"
+          onClick={() => navigate({ to: '/mentor-ia' })}
+          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full shadow-md transition-transform hover:scale-105 active:scale-95"
+          style={{
+            backgroundColor: 'var(--text-primary)',
+            color: 'var(--bg-card)',
+          }}
+        >
+          <MessageCircle size={18} strokeWidth={2.2} />
+        </button>
+
+        <button
+          type="button"
+          aria-label="Cerrar sesión"
+          onClick={handleLogout}
+          className="flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm text-tsecondary-500 shadow-md transition hover:text-tbase-500"
+        >
+          <LogOut size={16} />
+          <span>Cerrar sesión</span>
+        </button>
+      </div>
     </div>
   );
 }

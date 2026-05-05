@@ -13,6 +13,7 @@
 #   - IMAGE_NAME             → ej: ghcr.io/nachodiezgarcia/3tpi-nachodiezgarcia
 #   - IMAGE_TAG              → ej: latest
 #   - RENDER_DEPLOY_HOOK_URL → URL del deploy hook de Render (web service)
+#   - VITE_OPENROUTER_API_KEY → clave para compilar el cliente con Mentor IA
 #
 # Variables de entorno de la app (configurar en Render, no aquí):
 #   - PUBLIC_API_BASE_URL    → URL pública de la API (runtime)
@@ -62,6 +63,8 @@ jobs:
           file: ./03-WD/intermodular-proyect-app/apps/web/Dockerfile
           push: true
           tags: ${{ secrets.IMAGE_NAME }}:${{ secrets.IMAGE_TAG }}
+          build-args: |
+            VITE_OPENROUTER_API_KEY=${{ secrets.VITE_OPENROUTER_API_KEY }}
 
       # ── 4. Notifica a Render para que arranque el nuevo contenedor ─────────
       - name: Trigger Render deploy
