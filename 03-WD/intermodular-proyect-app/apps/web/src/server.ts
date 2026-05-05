@@ -43,7 +43,7 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
     const webReq = new Request(url, {
       method: req.method ?? 'GET',
       headers,
-      body: body !== null && body.length > 0 ? body : undefined,
+      body: body !== null && body.length > 0 ? new Uint8Array(body) : undefined,
     });
 
     const webRes = await handler(webReq);
