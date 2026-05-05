@@ -9,7 +9,7 @@ export default defineConfig({
     tanstackStart({
       routesDirectory: 'src/routes',
       server: {
-        entry: './src/server.ts',
+        entry: './server.ts',
       },
     }),
     viteReact(),
