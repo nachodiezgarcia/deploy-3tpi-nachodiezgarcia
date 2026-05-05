@@ -8234,6 +8234,1091 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "D5w24N",
+      "x": 8230,
+      "y": -786,
+      "name": "Mentor IA",
+      "clip": true,
+      "width": 2256,
+      "height": 1075,
+      "fill": "#FFFFFF",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "U1LBbS",
+          "x": 128,
+          "y": 138,
+          "name": "04.1 · MENTOR IA",
+          "theme": {
+            "mode": "light"
+          },
+          "width": 1289,
+          "height": 800,
+          "fill": "$bg-page",
+          "layout": "vertical",
+          "children": [
+            {
+              "id": "CVkBO",
+              "type": "ref",
+              "ref": "RZ3xW",
+              "name": "DskHdr",
+              "width": "fill_container"
+            },
+            {
+              "type": "frame",
+              "id": "otqaS",
+              "name": "DskBody",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 20,
+              "padding": [
+                32,
+                60
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "g4z6UT",
+                  "name": "WelcomeCard",
+                  "width": "fill_container",
+                  "fill": "$bg-card",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$border"
+                  },
+                  "gap": 14,
+                  "padding": [
+                    18,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "p8zl6",
+                      "name": "WelcomeIco",
+                      "width": 40,
+                      "height": 40,
+                      "fill": "$btn-primary-bg",
+                      "cornerRadius": 20,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "RQ69v",
+                          "name": "welcomeIcoSvg",
+                          "width": 22,
+                          "height": 22,
+                          "iconFontName": "bot",
+                          "iconFontFamily": "lucide",
+                          "fill": "$btn-primary-text"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hD3cp",
+                      "name": "WelcomeTexts",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "V9IMzs",
+                          "name": "welcomeTitle",
+                          "fill": "$text-primary",
+                          "content": "Asistente IA",
+                          "fontFamily": "Inter",
+                          "fontSize": 18,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "VRkDB",
+                          "name": "welcomeSub",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Pregunta sobre cursos, lecciones o recomendaciones y te responderé con base en el catálogo disponible.",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "N9Q6yc",
+                  "name": "MsgsCard",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$bg-card",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$border"
+                  },
+                  "layout": "vertical",
+                  "padding": [
+                    20,
+                    24
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "HTtVK",
+                      "name": "MobMsgs",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "layout": "vertical",
+                      "gap": 12,
+                      "padding": 16,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "oYuCG",
+                          "name": "MobIA1Wrap",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "TZKQ4",
+                              "name": "IA1Inner",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "alignItems": "end",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "R8Wml",
+                                  "name": "MobIA1Ico",
+                                  "width": 26,
+                                  "height": 26,
+                                  "fill": "$btn-primary-bg",
+                                  "cornerRadius": 13,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon_font",
+                                      "id": "MbbrR",
+                                      "name": "mobIA1icoSvg",
+                                      "width": 14,
+                                      "height": 14,
+                                      "iconFontName": "bot",
+                                      "iconFontFamily": "lucide",
+                                      "fill": "$btn-primary-text"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "mAk2M",
+                                  "name": "MobIA1Bubble",
+                                  "fill": "$bg-card",
+                                  "cornerRadius": [
+                                    10,
+                                    10,
+                                    10,
+                                    0
+                                  ],
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": 1,
+                                    "fill": "$border"
+                                  },
+                                  "layout": "vertical",
+                                  "gap": 4,
+                                  "padding": [
+                                    10,
+                                    14
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "z643fz",
+                                      "name": "lbl_ia1",
+                                      "fill": "$text-primary",
+                                      "content": "Asistente",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 11,
+                                      "fontWeight": "700"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "MhTDr",
+                                      "name": "mobIA1text",
+                                      "fill": "$text-primary",
+                                      "textGrowth": "fixed-width",
+                                      "width": 260,
+                                      "content": "¡Hola, soy tu tutor. Pregúntame lo que quieras sobre los cursos disponibles.",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 13,
+                                      "fontWeight": "normal"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "ofITT",
+                                      "name": "mobIA1time",
+                                      "fill": "$text-secondary",
+                                      "content": "10:32",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 10,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "rWnyI",
+                          "name": "MobUser1Wrap",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "justifyContent": "end",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "lkp4o",
+                              "name": "MobUser1Bubble",
+                              "fill": "$btn-primary-bg",
+                              "cornerRadius": [
+                                10,
+                                10,
+                                0,
+                                10
+                              ],
+                              "layout": "vertical",
+                              "gap": 4,
+                              "padding": [
+                                10,
+                                14
+                              ],
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "Y0I1z",
+                                  "name": "lbl_u1",
+                                  "fill": "$btn-primary-text",
+                                  "content": "Tú",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 11,
+                                  "fontWeight": "700"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "oQiJj",
+                                  "name": "mobUser1text",
+                                  "fill": "$btn-primary-text",
+                                  "textGrowth": "fixed-width",
+                                  "width": 220,
+                                  "content": "¿Qué son los React hooks?",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "YYime",
+                                  "name": "mobUser1time",
+                                  "fill": "$color-accent-text",
+                                  "content": "10:33",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 10,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "a9Pag0",
+                          "name": "MobIA2Wrap",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "sorUL",
+                              "name": "IA2Inner",
+                              "width": "fill_container",
+                              "gap": 8,
+                              "alignItems": "end",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "P0MPK",
+                                  "name": "MobIA2Ico",
+                                  "width": 26,
+                                  "height": 26,
+                                  "fill": "$btn-primary-bg",
+                                  "cornerRadius": 13,
+                                  "justifyContent": "center",
+                                  "alignItems": "center",
+                                  "children": [
+                                    {
+                                      "type": "icon_font",
+                                      "id": "ZwCNh",
+                                      "name": "mobIA2icoSvg",
+                                      "width": 14,
+                                      "height": 14,
+                                      "iconFontName": "bot",
+                                      "iconFontFamily": "lucide",
+                                      "fill": "$btn-primary-text"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "ZdJe8",
+                                  "name": "MobIA2Bubble",
+                                  "fill": "$bg-card",
+                                  "cornerRadius": [
+                                    10,
+                                    10,
+                                    10,
+                                    0
+                                  ],
+                                  "stroke": {
+                                    "align": "inside",
+                                    "thickness": 1,
+                                    "fill": "$border"
+                                  },
+                                  "layout": "vertical",
+                                  "gap": 4,
+                                  "padding": [
+                                    10,
+                                    14
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "GVeFU",
+                                      "name": "lbl_ia2",
+                                      "fill": "$text-primary",
+                                      "content": "Asistente",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 11,
+                                      "fontWeight": "700"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "K4Vgh",
+                                      "name": "mobIA2text",
+                                      "fill": "$text-primary",
+                                      "textGrowth": "fixed-width",
+                                      "width": 260,
+                                      "content": "Los hooks son funciones que permiten\nusar estado en componentes funcionales.\nEj: useState, useEffect...",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 13,
+                                      "fontWeight": "normal"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "mlhp7",
+                                      "name": "mobIA2time",
+                                      "fill": "$text-secondary",
+                                      "content": "10:34",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 10,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "aKisq",
+                      "name": "InputRow",
+                      "width": "fill_container",
+                      "fill": "#00000000",
+                      "gap": 12,
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "TNvjN",
+                          "name": "ChatInput",
+                          "width": "fill_container",
+                          "stroke": {
+                            "align": "outside",
+                            "thickness": {
+                              "top": 1
+                            }
+                          },
+                          "gap": 12,
+                          "padding": [
+                            12,
+                            16
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "HTKe5",
+                              "name": "InputBox",
+                              "width": "fill_container",
+                              "height": 44,
+                              "fill": "$input-bg",
+                              "cornerRadius": 22,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border"
+                              },
+                              "padding": [
+                                0,
+                                16
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "bX7ez",
+                                  "name": "inputText",
+                                  "fill": "$placeholder-text",
+                                  "content": "Escribe tu pregunta...",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 14,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "Cs6Qu",
+                              "name": "SendBtn",
+                              "width": 44,
+                              "height": 44,
+                              "fill": "$btn-primary-bg",
+                              "cornerRadius": 22,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "eTsus",
+                                  "name": "sendIco",
+                                  "width": 20,
+                                  "height": 20,
+                                  "iconFontName": "send",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$btn-primary-text"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Z1radG",
+              "name": "FabRowDsk",
+              "width": "fill_container",
+              "fill": "#00000000",
+              "padding": [
+                0,
+                20,
+                20,
+                0
+              ],
+              "justifyContent": "end",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "drzWr",
+                  "name": "ChatFab",
+                  "width": 56,
+                  "height": 56,
+                  "fill": "$text-primary",
+                  "cornerRadius": 28,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#1f231630",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 12
+                  },
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "ZARS3",
+                      "width": 22,
+                      "height": 22,
+                      "iconFontName": "message-circle",
+                      "iconFontFamily": "lucide",
+                      "fill": "$bg-card"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "PpxQN",
+          "x": 1638,
+          "y": 116,
+          "name": "04.1m · MENTOR IA",
+          "theme": {
+            "mode": "light"
+          },
+          "width": 390,
+          "height": 844,
+          "fill": "$bg-page",
+          "layout": "vertical",
+          "children": [
+            {
+              "id": "X1Zjv8",
+              "type": "ref",
+              "ref": "kAgIP",
+              "width": "fill_container"
+            },
+            {
+              "type": "frame",
+              "id": "OvEEp",
+              "name": "MobCursosBody",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "cFQio",
+                  "name": "MobMsgs",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "KYMA3",
+                      "name": "WelcomeCard",
+                      "width": "fill_container",
+                      "fill": "$bg-card",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border"
+                      },
+                      "gap": 14,
+                      "padding": [
+                        18,
+                        24
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "pQ5Pm",
+                          "name": "WelcomeIco",
+                          "width": 40,
+                          "height": 40,
+                          "fill": "$btn-primary-bg",
+                          "cornerRadius": 20,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "j7UlpZ",
+                              "name": "welcomeIcoSvg",
+                              "width": 22,
+                              "height": 22,
+                              "iconFontName": "bot",
+                              "iconFontFamily": "lucide",
+                              "fill": "$btn-primary-text"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "SNEP2",
+                          "name": "WelcomeTexts",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "F3DYo",
+                              "name": "welcomeTitle",
+                              "fill": "$text-primary",
+                              "content": "Asistente IA",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "700"
+                            },
+                            {
+                              "type": "text",
+                              "id": "mwwPf",
+                              "name": "welcomeSub",
+                              "fill": "$text-secondary",
+                              "textGrowth": "fixed-width",
+                              "width": "fill_container",
+                              "content": "Pregunta sobre cursos, lecciones o recomendaciones y te responderé con base en el catálogo disponible.",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "BhLCI",
+                      "name": "MsgsCard",
+                      "width": "fill_container",
+                      "height": 467,
+                      "fill": "$bg-card",
+                      "cornerRadius": 12,
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$border"
+                      },
+                      "layout": "vertical",
+                      "padding": [
+                        20,
+                        0
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "fBzKj",
+                          "name": "MobMsgs",
+                          "width": "fill_container",
+                          "height": "fill_container",
+                          "layout": "vertical",
+                          "gap": 12,
+                          "padding": 16,
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "gQj4P",
+                              "name": "MobIA1Wrap",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "xxONO",
+                                  "name": "IA1Inner",
+                                  "width": "fill_container",
+                                  "gap": 8,
+                                  "alignItems": "end",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "hmXPa",
+                                      "name": "MobIA1Ico",
+                                      "width": 26,
+                                      "height": 26,
+                                      "fill": "$btn-primary-bg",
+                                      "cornerRadius": 13,
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "icon_font",
+                                          "id": "a9wJz",
+                                          "name": "mobIA1icoSvg",
+                                          "width": 14,
+                                          "height": 14,
+                                          "iconFontName": "bot",
+                                          "iconFontFamily": "lucide",
+                                          "fill": "$btn-primary-text"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "mCfbO",
+                                      "name": "MobIA1Bubble",
+                                      "fill": "$bg-card",
+                                      "cornerRadius": [
+                                        10,
+                                        10,
+                                        10,
+                                        0
+                                      ],
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 1,
+                                        "fill": "$border"
+                                      },
+                                      "layout": "vertical",
+                                      "gap": 4,
+                                      "padding": [
+                                        10,
+                                        14
+                                      ],
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "i3knQn",
+                                          "name": "lbl_mob_ia1",
+                                          "fill": "$text-primary",
+                                          "content": "Asistente",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 11,
+                                          "fontWeight": "700"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "dXCla",
+                                          "name": "mobIA1text",
+                                          "fill": "$text-primary",
+                                          "textGrowth": "fixed-width",
+                                          "width": 260,
+                                          "content": "¡Hola, soy tu tutor. Pregúntame lo que quieras sobre los cursos disponibles.",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 13,
+                                          "fontWeight": "normal"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "TqTVJ",
+                                          "name": "mobIA1time",
+                                          "fill": "$text-secondary",
+                                          "content": "10:32",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 10,
+                                          "fontWeight": "normal"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "tQzqo",
+                              "name": "MobUser1Wrap",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "justifyContent": "end",
+                              "alignItems": "end",
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "JKWxq",
+                                  "name": "MobUser1Bubble",
+                                  "fill": "$btn-primary-bg",
+                                  "cornerRadius": [
+                                    10,
+                                    10,
+                                    0,
+                                    10
+                                  ],
+                                  "layout": "vertical",
+                                  "gap": 4,
+                                  "padding": [
+                                    10,
+                                    14
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "rO8Ea",
+                                      "name": "lbl_mob_u1",
+                                      "fill": "$btn-primary-text",
+                                      "content": "Tú",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 11,
+                                      "fontWeight": "700"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "Egedx",
+                                      "name": "mobUser1text",
+                                      "fill": "$btn-primary-text",
+                                      "textGrowth": "fixed-width",
+                                      "width": 220,
+                                      "content": "¿Qué son los React hooks?",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 13,
+                                      "fontWeight": "normal"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "OlSFF",
+                                      "name": "mobUser1time",
+                                      "fill": "$color-accent-text",
+                                      "content": "10:33",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 10,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "etaja",
+                              "name": "MobIA2Wrap",
+                              "width": "fill_container",
+                              "layout": "vertical",
+                              "gap": 4,
+                              "children": [
+                                {
+                                  "type": "frame",
+                                  "id": "K019un",
+                                  "name": "IA2Inner",
+                                  "width": "fill_container",
+                                  "gap": 8,
+                                  "alignItems": "end",
+                                  "children": [
+                                    {
+                                      "type": "frame",
+                                      "id": "o0kR5",
+                                      "name": "MobIA2Ico",
+                                      "width": 26,
+                                      "height": 26,
+                                      "fill": "$btn-primary-bg",
+                                      "cornerRadius": 13,
+                                      "justifyContent": "center",
+                                      "alignItems": "center",
+                                      "children": [
+                                        {
+                                          "type": "icon_font",
+                                          "id": "rQuX5",
+                                          "name": "mobIA2icoSvg",
+                                          "width": 14,
+                                          "height": 14,
+                                          "iconFontName": "bot",
+                                          "iconFontFamily": "lucide",
+                                          "fill": "$btn-primary-text"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "frame",
+                                      "id": "Vocqw",
+                                      "name": "MobIA2Bubble",
+                                      "fill": "$bg-card",
+                                      "cornerRadius": [
+                                        10,
+                                        10,
+                                        10,
+                                        0
+                                      ],
+                                      "stroke": {
+                                        "align": "inside",
+                                        "thickness": 1,
+                                        "fill": "$border"
+                                      },
+                                      "layout": "vertical",
+                                      "gap": 4,
+                                      "padding": [
+                                        10,
+                                        14
+                                      ],
+                                      "children": [
+                                        {
+                                          "type": "text",
+                                          "id": "PIJD6",
+                                          "name": "lbl_mob_ia2",
+                                          "fill": "$text-primary",
+                                          "content": "Asistente",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 11,
+                                          "fontWeight": "700"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "aEt6X",
+                                          "name": "mobIA2text",
+                                          "fill": "$text-primary",
+                                          "textGrowth": "fixed-width",
+                                          "width": 260,
+                                          "content": "Los hooks son funciones que permiten\nusar estado en componentes funcionales.\nEj: useState, useEffect...",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 13,
+                                          "fontWeight": "normal"
+                                        },
+                                        {
+                                          "type": "text",
+                                          "id": "HeKK5",
+                                          "name": "mobIA2time",
+                                          "fill": "$text-secondary",
+                                          "content": "10:34",
+                                          "fontFamily": "Inter",
+                                          "fontSize": 10,
+                                          "fontWeight": "normal"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "J7kCJ",
+                          "name": "MobChatInput",
+                          "width": "fill_container",
+                          "stroke": {
+                            "align": "outside",
+                            "thickness": {
+                              "top": 1
+                            }
+                          },
+                          "gap": 10,
+                          "padding": [
+                            10,
+                            16
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "r9meqm",
+                              "name": "MobInputBox",
+                              "width": "fill_container",
+                              "height": 40,
+                              "fill": "$input-bg",
+                              "cornerRadius": 20,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "$border"
+                              },
+                              "padding": [
+                                0,
+                                14
+                              ],
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "KmD20",
+                                  "name": "mobInputText",
+                                  "fill": "$placeholder-text",
+                                  "content": "Escribe tu pregunta...",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "normal"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "mHeEw",
+                              "name": "MobSendBtn",
+                              "width": 40,
+                              "height": 40,
+                              "fill": "$btn-primary-bg",
+                              "cornerRadius": 20,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "nPTj0",
+                                  "name": "mobSendIco",
+                                  "width": 18,
+                                  "height": 18,
+                                  "iconFontName": "send",
+                                  "iconFontFamily": "lucide",
+                                  "fill": "$btn-primary-text"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "tQ8YD",
+              "layoutPosition": "absolute",
+              "x": 322,
+              "y": 776,
+              "name": "MobChatFab",
+              "width": 48,
+              "height": 48,
+              "fill": "$text-primary",
+              "cornerRadius": 24,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#1f231630",
+                "offset": {
+                  "x": 0,
+                  "y": 4
+                },
+                "blur": 12
+              },
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "CJVTD",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "message-circle",
+                  "iconFontFamily": "lucide",
+                  "fill": "$bg-card"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "themes": {
