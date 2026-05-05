@@ -1,15 +1,25 @@
-import { createStartHandler, defaultStreamHandler } from '@tanstack/react-start/server';
-import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
+import {
+  createStartHandler,
+  defaultStreamHandler,
+} from '@tanstack/react-start/server';
+import {
+  createServer,
+  type IncomingMessage,
+  type ServerResponse,
+} from 'node:http';
 
 const handler = createStartHandler({ handler: defaultStreamHandler });
 const PORT = Number(process.env['PORT'] ?? 3000);
 
 function readBody(req: IncomingMessage): Promise<Buffer | null> {
-  if (req.method === 'GET' || req.method === 'HEAD') return Promise.resolve(null);
+  if (req.method === 'GET' || req.method === 'HEAD')
+    return Promise.resolve(null);
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
     req.on('data', (chunk: Buffer) => chunks.push(chunk));
-    req.on('end', () => resolve(chunks.length > 0 ? Buffer.concat(chunks) : null));
+    req.on('end', () =>
+      resolve(chunks.length > 0 ? Buffer.concat(chunks) : null),
+    );
     req.on('error', reject);
   });
 }
