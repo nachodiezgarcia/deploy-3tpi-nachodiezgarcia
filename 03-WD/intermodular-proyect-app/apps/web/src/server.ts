@@ -14,6 +14,8 @@ import { extname, resolve } from 'node:path';
 const handler = createStartHandler({ handler: defaultStreamHandler });
 const PORT = Number(process.env['PORT'] ?? 3000);
 const CLIENT_DIST_DIR = resolve(process.cwd(), 'dist', 'client');
+const API_BASE_URL =
+  process.env['PUBLIC_API_BASE_URL'] ?? 'http://localhost:4000';
 
 const CONTENT_TYPES: Record<string, string> = {
   '.css': 'text/css; charset=utf-8',
@@ -90,9 +92,78 @@ async function tryServeClientAsset(
   return true;
 }
 
+async function sendWebResponse(
+  res: ServerResponse,
+  webRes: Response,
+): Promise<void> {
+  const resHeaders: Record<string, string[]> = {};
+  webRes.headers.forEach((value, key) => {
+    const existing = resHeaders[key];
+    if (existing !== undefined) {
+      existing.push(value);
+    } else {
+      resHeaders[key] = [value];
+    }
+  });
+
+  res.writeHead(webRes.status, resHeaders);
+
+  if (webRes.body) {
+    const reader = webRes.body.getReader();
+    try {
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        res.write(value);
+      }
+    } finally {
+      res.end();
+    }
+  } else {
+    res.end();
+  }
+}
+
+async function tryProxyApiRequest(
+  req: IncomingMessage,
+  res: ServerResponse,
+): Promise<boolean> {
+  const rawPath = req.url ?? '/';
+  if (!rawPath.startsWith('/api/')) return false;
+
+  const method = req.method ?? 'GET';
+  const body = await readBody(req);
+
+  const headers = new Headers();
+  for (const [key, value] of Object.entries(req.headers)) {
+    if (value === undefined) continue;
+    if (key.toLowerCase() === 'host') continue;
+
+    if (Array.isArray(value)) {
+      for (const v of value) headers.append(key, v);
+    } else {
+      headers.set(key, value);
+    }
+  }
+
+  const apiRes = await fetch(`${API_BASE_URL}${rawPath}`, {
+    method,
+    headers,
+    body: body !== null && body.length > 0 ? new Uint8Array(body) : undefined,
+    redirect: 'manual',
+  });
+
+  await sendWebResponse(res, apiRes);
+  return true;
+}
+
 createServer(async (req: IncomingMessage, res: ServerResponse) => {
   try {
     if (await tryServeClientAsset(req, res)) {
+      return;
+    }
+
+    if (await tryProxyApiRequest(req, res)) {
       return;
     }
 
@@ -124,33 +195,7 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
     });
 
     const webRes = await handler(webReq);
-
-    const resHeaders: Record<string, string[]> = {};
-    webRes.headers.forEach((value, key) => {
-      const existing = resHeaders[key];
-      if (existing !== undefined) {
-        existing.push(value);
-      } else {
-        resHeaders[key] = [value];
-      }
-    });
-
-    res.writeHead(webRes.status, resHeaders);
-
-    if (webRes.body) {
-      const reader = webRes.body.getReader();
-      try {
-        for (;;) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          res.write(value);
-        }
-      } finally {
-        res.end();
-      }
-    } else {
-      res.end();
-    }
+    await sendWebResponse(res, webRes);
   } catch (err) {
     console.error('[server] error:', err);
     if (!res.headersSent) res.writeHead(500);
