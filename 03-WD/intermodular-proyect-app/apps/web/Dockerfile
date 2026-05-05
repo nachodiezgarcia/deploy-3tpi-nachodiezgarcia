@@ -14,8 +14,8 @@ FROM node:22-alpine AS builder
 
 WORKDIR /monorepo
 
-# node:22-alpine trae npm 10; el proyecto requiere npm >= 11 (lockfileVersion 3).
-RUN npm install -g npm@11 --quiet
+# node:22-alpine trae npm 10; activamos npm 11 via corepack (incluido en Node 22).
+RUN corepack enable && corepack prepare npm@11 --activate
 
 # Copiamos los manifests primero para aprovechar la cache de capas de Docker.
 # Si solo cambia el código fuente, las capas de install no se reconstruyen.
