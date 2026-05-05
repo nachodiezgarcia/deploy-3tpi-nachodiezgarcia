@@ -16,7 +16,9 @@ Responde siempre de forma clara, pedagogica y en el mismo idioma que el usuario.
 
   const catalog = courses
     .map((course) => {
-      const lessons = course.lessons.map((lesson) => `  - ${lesson.name}`).join('\n');
+      const lessons = course.lessons
+        .map((lesson) => `  - ${lesson.name}`)
+        .join('\n');
       return `Curso: ${course.name}\nDescripcion: ${course.shortDescription || course.description}\nLecciones:\n${lessons}`;
     })
     .join('\n\n');
@@ -48,7 +50,10 @@ export async function sendMentorMessage(
     body: JSON.stringify({
       model: 'openai/gpt-oss-120b:free',
       stream: true,
-      messages: [{ role: 'system', content: buildSystemPrompt(courses) }, ...messages],
+      messages: [
+        { role: 'system', content: buildSystemPrompt(courses) },
+        ...messages,
+      ],
     }),
   });
 

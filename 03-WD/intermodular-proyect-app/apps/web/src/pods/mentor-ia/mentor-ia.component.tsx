@@ -21,7 +21,10 @@ export function MentorIaChat() {
   });
 
   const { data: courseDetails = [] } = useQuery({
-    queryKey: ['all-course-details', studentCourses.map((course) => course.contentIslandId)],
+    queryKey: [
+      'all-course-details',
+      studentCourses.map((course) => course.contentIslandId),
+    ],
     queryFn: () =>
       Promise.all(
         studentCourses.map((course) =>
@@ -102,10 +105,12 @@ export function MentorIaChat() {
           <Bot size={20} strokeWidth={2} />
         </div>
         <div className="flex flex-col gap-0.5">
-          <span className="text-[15px] font-semibold text-tbase-500">Asistente IA</span>
+          <span className="text-[15px] font-semibold text-tbase-500">
+            Asistente IA
+          </span>
           <span className="text-[13px] text-tsecondary-500">
-            Pregunta sobre cursos, lecciones o recomendaciones y te respondere con base en el
-            catalogo disponible.
+            Pregunta sobre cursos, lecciones o recomendaciones y te respondere
+            con base en el catalogo disponible.
           </span>
         </div>
       </div>
@@ -125,7 +130,9 @@ export function MentorIaChat() {
             <Bot size={16} strokeWidth={2} />
           </div>
           <div className="flex min-w-0 flex-col gap-0.5">
-            <span className="text-[15px] font-semibold text-tbase-500">Asistente IA</span>
+            <span className="text-[15px] font-semibold text-tbase-500">
+              Asistente IA
+            </span>
             <span className="text-[12px] text-tsecondary-500">
               Pregunta sobre cursos, lecciones o recomendaciones.
             </span>
@@ -147,9 +154,12 @@ export function MentorIaChat() {
                   color: 'var(--text-primary)',
                 }}
               >
-                <strong className="mb-1 block text-[13px] font-semibold">Asistente</strong>
+                <strong className="mb-1 block text-[13px] font-semibold">
+                  Asistente
+                </strong>
                 <p className="text-[14px] leading-relaxed text-tsecondary-500">
-                  Hola, soy tu tutor. Preguntame lo que quieras sobre los cursos disponibles.
+                  Hola, soy tu tutor. Preguntame lo que quieras sobre los cursos
+                  disponibles.
                 </p>
               </div>
             </div>
@@ -159,10 +169,15 @@ export function MentorIaChat() {
             const isUser = msg.role === 'user';
 
             return (
-              <div key={index} className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+              <div
+                key={index}
+                className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
+              >
                 <div
                   className={`max-w-[85%] rounded-2xl px-4 py-3 md:max-w-[75%] ${
-                    isUser ? 'rounded-tr-sm' : 'rounded-tl-sm border border-border'
+                    isUser
+                      ? 'rounded-tr-sm'
+                      : 'rounded-tl-sm border border-border'
                   }`}
                   style={
                     isUser
@@ -181,7 +196,9 @@ export function MentorIaChat() {
                   </strong>
 
                   {isUser ? (
-                    <p className="whitespace-pre-wrap text-[14px] leading-relaxed">{msg.content}</p>
+                    <p className="whitespace-pre-wrap text-[14px] leading-relaxed">
+                      {msg.content}
+                    </p>
                   ) : msg.content ? (
                     <Markdown
                       content={msg.content}
@@ -195,7 +212,9 @@ export function MentorIaChat() {
             );
           })}
 
-          {isThinking && <p className="text-[14px] text-tsecondary-500">Pensando...</p>}
+          {isThinking && (
+            <p className="text-[14px] text-tsecondary-500">Pensando...</p>
+          )}
 
           <div ref={bottomRef} />
         </div>
