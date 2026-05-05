@@ -7,9 +7,28 @@ import {
   type IncomingMessage,
   type ServerResponse,
 } from 'node:http';
+import { createReadStream } from 'node:fs';
+import { access } from 'node:fs/promises';
+import { extname, resolve } from 'node:path';
 
 const handler = createStartHandler({ handler: defaultStreamHandler });
 const PORT = Number(process.env['PORT'] ?? 3000);
+const CLIENT_DIST_DIR = resolve(process.cwd(), 'dist', 'client');
+
+const CONTENT_TYPES: Record<string, string> = {
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.map': 'application/json; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.ico': 'image/x-icon',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+};
 
 console.log('[server-entry] custom src/server.ts loaded');
 
@@ -26,8 +45,57 @@ function readBody(req: IncomingMessage): Promise<Buffer | null> {
   });
 }
 
+async function tryServeClientAsset(
+  req: IncomingMessage,
+  res: ServerResponse,
+): Promise<boolean> {
+  const method = req.method ?? 'GET';
+  if (method !== 'GET' && method !== 'HEAD') return false;
+
+  const rawPath = req.url?.split('?')[0] ?? '/';
+  if (!rawPath.startsWith('/assets/')) return false;
+
+  const decodedPath = decodeURIComponent(rawPath);
+  const assetPath = resolve(CLIENT_DIST_DIR, `.${decodedPath}`);
+
+  // Prevent directory traversal outside dist/client.
+  if (!assetPath.startsWith(CLIENT_DIST_DIR)) return false;
+
+  try {
+    await access(assetPath);
+  } catch {
+    return false;
+  }
+
+  const contentType = CONTENT_TYPES[extname(assetPath).toLowerCase()];
+  if (contentType) {
+    res.setHeader('Content-Type', contentType);
+  }
+  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+
+  if (method === 'HEAD') {
+    res.writeHead(200);
+    res.end();
+    return true;
+  }
+
+  await new Promise<void>((resolveDone, rejectDone) => {
+    const stream = createReadStream(assetPath);
+    stream.on('error', rejectDone);
+    res.on('error', rejectDone);
+    res.on('finish', () => resolveDone());
+    stream.pipe(res);
+  });
+
+  return true;
+}
+
 createServer(async (req: IncomingMessage, res: ServerResponse) => {
   try {
+    if (await tryServeClientAsset(req, res)) {
+      return;
+    }
+
     const forwardedProto = req.headers['x-forwarded-proto'];
     const protocol = Array.isArray(forwardedProto)
       ? forwardedProto[0]
