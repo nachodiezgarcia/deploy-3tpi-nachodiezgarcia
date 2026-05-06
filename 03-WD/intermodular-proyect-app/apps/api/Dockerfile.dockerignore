@@ -1,0 +1,26 @@
+**/node_modules
+**/.turbo
+**/dist
+**/.output
+
+# Apps que no son necesarias para compilar la API
+apps/web
+apps/console-runner
+
+**/.env
+**/.env.local
+**/.env.example
+**/.env.*.local
+
+.git
+.gitignore
+.gitattributes
+
+*.log
+npm-debug.log*
+
+.editorconfig
+.vscode
+
+**/routeTree.gen.ts
+**/.tanstack
