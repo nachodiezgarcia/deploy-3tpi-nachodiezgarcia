@@ -36,7 +36,8 @@ export function LoginForm() {
 
         const to = user.role === 'admin' ? '/admin' : '/dashboard';
         await router.navigate({ to });
-      } catch {
+      } catch (err) {
+        console.error('[login] caught error after 200:', err);
         notify.error('Error de red. Inténtalo de nuevo.');
       }
     },
