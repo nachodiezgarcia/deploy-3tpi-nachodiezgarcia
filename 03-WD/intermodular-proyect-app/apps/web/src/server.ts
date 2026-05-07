@@ -137,7 +137,9 @@ async function tryProxyApiRequest(
   const headers = new Headers();
   for (const [key, value] of Object.entries(req.headers)) {
     if (value === undefined) continue;
-    if (key.toLowerCase() === 'host') continue;
+    const lower = key.toLowerCase();
+    if (lower === 'host') continue;
+    if (lower === 'accept-encoding') continue;
 
     if (Array.isArray(value)) {
       for (const v of value) headers.append(key, v);

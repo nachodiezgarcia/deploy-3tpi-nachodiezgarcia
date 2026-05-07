@@ -23,8 +23,13 @@ export function LoginForm() {
         });
 
         if (!res.ok) {
-          const body = (await res.json()) as { message?: string };
-          notify.error(body.message ?? 'Error al iniciar sesión');
+          const text = await res.text();
+          let message = 'Error al iniciar sesión';
+          try {
+            const body = JSON.parse(text) as { message?: string };
+            message = body.message ?? message;
+          } catch {}
+          notify.error(message);
           return;
         }
 
