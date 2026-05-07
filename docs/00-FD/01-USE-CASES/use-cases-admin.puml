@@ -1,0 +1,132 @@
+@startuml
+title Casos de Uso - Admin
+left to right direction
+skinparam actorStyle awesome
+
+actor "Admin" as admin
+actor "Mentor IA\n(OpenRouter)" as ia <<external>>
+
+' ==================
+' AUTENTICACION
+' ==================
+rectangle "Autenticación" {
+  usecase "Iniciar sesión" as UC_Login
+  usecase "Cerrar sesión" as UC_Logout
+}
+
+' ==================
+' PANEL DE ADMIN
+' ==================
+rectangle "Panel de Administración" {
+  usecase "Ir a gestión de usuarios" as UC_NavUsers
+  usecase "Ir a gestión de trainings" as UC_NavTrainings
+}
+
+' ==================
+' GESTION DE USUARIOS
+' ==================
+rectangle "Gestión de Usuarios" {
+  usecase "Ver lista de usuarios" as UC_ListUsers
+  usecase "Ver detalle de usuario" as UC_UserDetail
+  usecase "Invitar nuevo usuario" as UC_InviteUser
+  usecase "Asignar training a usuario" as UC_AssignTraining
+  usecase "Desasignar training de usuario" as UC_UnassignTraining
+}
+
+' ==================
+' GESTION DE TRAININGS
+' ==================
+rectangle "Gestión de Trainings" {
+  usecase "Ver lista de trainings" as UC_ListTrainings
+  usecase "Ver detalle de training" as UC_TrainingDetail
+  usecase "Crear nuevo training" as UC_CreateTraining
+  usecase "Editar training" as UC_EditTraining
+}
+
+' ==================
+' MENTOR IA
+' ==================
+rectangle "Mentor IA" {
+  usecase "Abrir chat del mentor IA" as UC_OpenIA
+  usecase "Enviar consulta al mentor" as UC_SendMessage
+  usecase "Recibir respuesta del mentor" as UC_GetResponse
+}
+
+' ==================
+' RELACIONES
+' ==================
+admin --> UC_Login
+admin --> UC_Logout
+
+admin --> UC_NavUsers
+admin --> UC_NavTrainings
+
+UC_NavUsers ..> UC_ListUsers : <<include>>
+UC_NavTrainings ..> UC_ListTrainings : <<include>>
+
+admin --> UC_ListUsers
+admin --> UC_UserDetail
+admin --> UC_InviteUser
+admin --> UC_AssignTraining
+admin --> UC_UnassignTraining
+
+admin --> UC_ListTrainings
+admin --> UC_TrainingDetail
+admin --> UC_CreateTraining
+admin --> UC_EditTraining
+
+admin --> UC_OpenIA
+admin --> UC_SendMessage
+
+UC_SendMessage ..> UC_GetResponse : <<include>>
+ia --> UC_GetResponse : genera respuesta
+
+UC_UserDetail ..> UC_AssignTraining : <<include>>
+UC_UserDetail ..> UC_UnassignTraining : <<include>>
+UC_TrainingDetail ..> UC_EditTraining : <<extend>>
+
+' ==================
+' NOTAS CON CAPTURAS
+' ==================
+
+note bottom of UC_Login
+  [IMAGEN: Pantalla de login]
+  Screenshot de la pagina /login
+end note
+
+note bottom of UC_NavUsers
+  [IMAGEN: Panel de administracion]
+  Screenshot de /admin (tarjetas de navegacion)
+end note
+
+note bottom of UC_ListUsers
+  [IMAGEN: Panel de administracion de usuarios]
+  Screenshot de /admin/users
+end note
+
+note bottom of UC_UserDetail
+  [IMAGEN: Detalle de usuario con trainings asignados]
+  Screenshot de /admin/user/:id
+end note
+
+note bottom of UC_InviteUser
+  [IMAGEN: Formulario de invitacion de usuario]
+  Screenshot del formulario en /admin/user/new
+end note
+
+note bottom of UC_ListTrainings
+  [IMAGEN: Panel de administracion de trainings]
+  Screenshot de /admin/trainings
+end note
+
+note bottom of UC_CreateTraining
+  [IMAGEN: Formulario de creacion de training]
+  Screenshot del formulario en /admin/training/new
+end note
+
+note bottom of UC_OpenIA
+  [IMAGEN: Chat del Mentor IA abierto]
+  Screenshot del chat IA (FAB expandido)
+end note
+
+@enduml

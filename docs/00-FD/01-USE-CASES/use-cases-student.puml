@@ -1,0 +1,109 @@
+@startuml
+title Casos de Uso - Student
+left to right direction
+skinparam actorStyle awesome
+
+actor "Student" as student
+actor "Sistema de Email" as email <<external>>
+actor "Mentor IA\n(OpenRouter)" as ia <<external>>
+
+' ==================
+' AUTENTICACION / REGISTRO
+' ==================
+rectangle "Autenticación y Registro" {
+  usecase "Iniciar sesión" as UC_Login
+  usecase "Verificar codigo de email" as UC_Verify
+  usecase "Activar cuenta y crear contraseña" as UC_Activate
+  usecase "Cerrar sesión" as UC_Logout
+}
+
+' ==================
+' APRENDIZAJE
+' ==================
+rectangle "Aprendizaje" {
+  usecase "Ver mis cursos" as UC_Dashboard
+  usecase "Ver detalle de curso" as UC_CourseDetail
+  usecase "Ver lección" as UC_Lesson
+  usecase "Reproducir video de lección" as UC_Video
+  usecase "Leer contenido de lección" as UC_Content
+}
+
+' ==================
+' MENTOR IA
+' ==================
+rectangle "Mentor IA" {
+  usecase "Abrir chat del mentor IA" as UC_OpenIA
+  usecase "Enviar consulta al mentor" as UC_SendMessage
+  usecase "Recibir respuesta del mentor" as UC_GetResponse
+}
+
+' ==================
+' RELACIONES STUDENT
+' ==================
+student --> UC_Login
+student --> UC_Verify
+student --> UC_Activate
+student --> UC_Logout
+
+student --> UC_Dashboard
+student --> UC_CourseDetail
+student --> UC_Lesson
+student --> UC_OpenIA
+student --> UC_SendMessage
+
+' ==================
+' INCLUDES / EXTENDS
+' ==================
+UC_Dashboard ..> UC_CourseDetail : <<include>>
+UC_CourseDetail ..> UC_Lesson : <<include>>
+UC_Lesson ..> UC_Video : <<include>>
+UC_Lesson ..> UC_Content : <<include>>
+UC_SendMessage ..> UC_GetResponse : <<include>>
+UC_Verify ..> UC_Activate : <<extend>>
+
+' ==================
+' RELACIONES ACTORES EXTERNOS
+' ==================
+email --> UC_Verify : envia codigo
+ia --> UC_GetResponse : genera respuesta
+
+' ==================
+' NOTAS CON CAPTURAS
+' ==================
+
+note bottom of UC_Login
+  [IMAGEN: Pantalla de login]
+  Screenshot de la pagina /login
+end note
+
+note bottom of UC_Dashboard
+  [IMAGEN: Dashboard del estudiante con sus cursos]
+  Screenshot de /dashboard
+end note
+
+note bottom of UC_CourseDetail
+  [IMAGEN: Detalle de curso con lista de lecciones]
+  Screenshot de /course/:id
+end note
+
+note bottom of UC_Lesson
+  [IMAGEN: Pantalla de leccion con video y contenido]
+  Screenshot de /lesson/:id
+end note
+
+note bottom of UC_OpenIA
+  [IMAGEN: Chat del Mentor IA abierto]
+  Screenshot del chat IA (FAB expandido)
+end note
+
+note bottom of UC_Verify
+  [IMAGEN: Formulario de verificacion de codigo]
+  Screenshot de /verify
+end note
+
+note bottom of UC_Activate
+  [IMAGEN: Formulario de activacion de cuenta]
+  Screenshot de /activate
+end note
+
+@enduml
