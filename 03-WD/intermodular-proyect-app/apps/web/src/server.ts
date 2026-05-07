@@ -64,7 +64,6 @@ async function tryServeClientAsset(
   const decodedPath = decodeURIComponent(rawPath);
   const assetPath = resolve(CLIENT_DIST_DIR, `.${decodedPath}`);
 
-  // Prevent directory traversal outside dist/client.
   if (!assetPath.startsWith(CLIENT_DIST_DIR)) return false;
 
   try {
@@ -185,50 +184,52 @@ async function tryProxyApiRequest(
   return true;
 }
 
-if (process.env['NODE_ENV'] !== 'development') createServer(async (req: IncomingMessage, res: ServerResponse) => {
-  try {
-    if (await tryServeClientAsset(req, res)) {
-      return;
-    }
-
-    if (await tryProxyApiRequest(req, res)) {
-      return;
-    }
-
-    const forwardedProto = req.headers['x-forwarded-proto'];
-    const protocol = Array.isArray(forwardedProto)
-      ? forwardedProto[0]
-      : (forwardedProto?.split(',')[0]?.trim() ?? 'http');
-    const forwardedHost = req.headers['x-forwarded-host'];
-    const host = Array.isArray(forwardedHost)
-      ? forwardedHost[0]
-      : (forwardedHost ?? req.headers.host ?? `localhost:${PORT}`);
-    const url = `${protocol}://${host}${req.url ?? '/'}`;
-    const body = await readBody(req);
-
-    const headers = new Headers();
-    for (const [key, value] of Object.entries(req.headers)) {
-      if (value === undefined) continue;
-      if (Array.isArray(value)) {
-        for (const v of value) headers.append(key, v);
-      } else {
-        headers.set(key, value);
+if (process.env['NODE_ENV'] !== 'development')
+  createServer(async (req: IncomingMessage, res: ServerResponse) => {
+    try {
+      if (await tryServeClientAsset(req, res)) {
+        return;
       }
+
+      if (await tryProxyApiRequest(req, res)) {
+        return;
+      }
+
+      const forwardedProto = req.headers['x-forwarded-proto'];
+      const protocol = Array.isArray(forwardedProto)
+        ? forwardedProto[0]
+        : (forwardedProto?.split(',')[0]?.trim() ?? 'http');
+      const forwardedHost = req.headers['x-forwarded-host'];
+      const host = Array.isArray(forwardedHost)
+        ? forwardedHost[0]
+        : (forwardedHost ?? req.headers.host ?? `localhost:${PORT}`);
+      const url = `${protocol}://${host}${req.url ?? '/'}`;
+      const body = await readBody(req);
+
+      const headers = new Headers();
+      for (const [key, value] of Object.entries(req.headers)) {
+        if (value === undefined) continue;
+        if (Array.isArray(value)) {
+          for (const v of value) headers.append(key, v);
+        } else {
+          headers.set(key, value);
+        }
+      }
+
+      const webReq = new Request(url, {
+        method: req.method ?? 'GET',
+        headers,
+        body:
+          body !== null && body.length > 0 ? new Uint8Array(body) : undefined,
+      });
+
+      const webRes = await handler(webReq);
+      await sendWebResponse(res, webRes);
+    } catch (err) {
+      console.error('[server] error:', err);
+      if (!res.headersSent) res.writeHead(500);
+      res.end();
     }
-
-    const webReq = new Request(url, {
-      method: req.method ?? 'GET',
-      headers,
-      body: body !== null && body.length > 0 ? new Uint8Array(body) : undefined,
-    });
-
-    const webRes = await handler(webReq);
-    await sendWebResponse(res, webRes);
-  } catch (err) {
-    console.error('[server] error:', err);
-    if (!res.headersSent) res.writeHead(500);
-    res.end();
-  }
-}).listen(PORT, () => {
-  console.log(`[tanstack-start] listening on http://0.0.0.0:${PORT}`);
-});
+  }).listen(PORT, () => {
+    console.log(`[tanstack-start] listening on http://0.0.0.0:${PORT}`);
+  });
