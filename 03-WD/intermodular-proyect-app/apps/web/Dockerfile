@@ -17,6 +17,9 @@ WORKDIR /monorepo
 ARG VITE_OPENROUTER_API_KEY
 ENV VITE_OPENROUTER_API_KEY=$VITE_OPENROUTER_API_KEY
 
+ARG PUBLIC_API_BASE_URL
+ENV PUBLIC_API_BASE_URL=$PUBLIC_API_BASE_URL
+
 # node:22-alpine trae npm 10; activamos npm 11 via corepack (incluido en Node 22).
 RUN corepack enable && corepack prepare npm@11 --activate
 
