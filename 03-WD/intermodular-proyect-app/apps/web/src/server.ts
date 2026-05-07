@@ -98,6 +98,9 @@ async function sendWebResponse(
 ): Promise<void> {
   const resHeaders: Record<string, string[]> = {};
   webRes.headers.forEach((value, key) => {
+    const lower = key.toLowerCase();
+    if (lower === 'content-encoding') return;
+    if (lower === 'content-length') return;
     const existing = resHeaders[key];
     if (existing !== undefined) {
       existing.push(value);
