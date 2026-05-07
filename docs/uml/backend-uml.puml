@@ -1,0 +1,190 @@
+@startuml
+title Diagrama de Clases - Backend (API)
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+' ==================
+' MODELS (MongoDB)
+' ==================
+package "Models" {
+  class UserDoc {
+    +_id : ObjectId
+    +name : string
+    +email : string
+    +password : string
+    +isActive : boolean
+    +rol : "student" | "admin"
+    +activeTrainings : TrainingRef[]
+  }
+
+  class SignUpUserDoc {
+    +_id : ObjectId
+    +email : string
+    +name : string
+    +rol : "student" | "admin"
+    +coursesToAssign : TrainingRef[]
+    +verificationCode : string
+    +createdAt : Date
+    +isVerified : boolean
+  }
+
+  class TrainingDoc {
+    +_id : ObjectId
+    +name_course : string
+    +contentIslandId : string
+    +creationDate : Date
+  }
+
+  class TrainingRef {
+    +contentIslandId : string
+    +name_course : string
+  }
+}
+
+' ==================
+' EXTERNAL MODELS (CMS)
+' ==================
+package "External Models (Content Island)" {
+  class CourseCI {
+    +id : string
+    +name : string
+    +description : string
+    +shortDescription : string
+    +image : Media
+    +lessons : LessonRefCI[]
+    +language : string
+    +lastUpdate : string
+  }
+
+  class LessonCI {
+    +id : string
+    +name : string
+    +description : string
+    +video : Media
+    +time : number
+    +view : string
+  }
+
+  class LessonRefCI {
+    +id : string
+    +name : string
+  }
+
+  class Media {
+    +url : string
+  }
+}
+
+' ==================
+' CORE SERVICES
+' ==================
+package "Core Services" {
+  class AuthService {
+    +signAccessToken(userId, role) : string
+    +signRefreshToken(userId) : string
+    +verifyAccessToken(token) : Payload
+    +verifyRefreshToken(token) : Payload
+  }
+
+  class DbClient {
+    -client : MongoClient
+    +connect() : void
+    +getDb() : Db
+  }
+
+  class ContentIslandClient {
+    +getCourse(id) : CourseCI
+    +getLesson(id) : LessonCI
+    +listCourses() : CourseCI[]
+  }
+
+  class EmailClient {
+    +sendVerificationEmail(email, code) : void
+  }
+
+  class EnvReader {
+    +get(key) : string
+  }
+}
+
+' ==================
+' MIDDLEWARE
+' ==================
+package "Middleware" {
+  class authMiddleware <<middleware>> {
+    +handle(ctx, next) : void
+  }
+
+  class requireAdmin <<middleware>> {
+    +handle(ctx, next) : void
+  }
+}
+
+' ==================
+' PODS (Route Handlers)
+' ==================
+package "Pods" {
+  class AuthRoutes <<routes>> {
+    +POST /api/auth/login
+    +POST /api/auth/verify
+    +POST /api/auth/activate
+    +POST /api/auth/refresh
+    +POST /api/auth/logout
+  }
+
+  class UsersRoutes <<routes>> {
+    +GET  /api/users
+    +GET  /api/users/:id
+    +POST /api/users
+  }
+
+  class TrainingRoutes <<routes>> {
+    +GET  /api/training
+    +GET  /api/training/:id
+    +POST /api/training
+    +PUT  /api/training/:id
+    +POST /api/training/:id/assign
+    +POST /api/training/:id/unassign
+  }
+
+  class StudentCoursesRoutes <<routes>> {
+    +GET /api/student-courses
+    +GET /api/student-courses/:contentIslandId
+  }
+
+  class LessonRoutes <<routes>> {
+    +GET /api/lesson/:lessonId
+  }
+}
+
+' ==================
+' RELACIONES
+' ==================
+
+UserDoc "1" *-- "0..*" TrainingRef : activeTrainings
+SignUpUserDoc "1" *-- "0..*" TrainingRef : coursesToAssign
+CourseCI "1" *-- "0..*" LessonRefCI : lessons
+CourseCI ..> Media
+LessonCI ..> Media
+
+AuthRoutes ..> AuthService
+AuthRoutes ..> DbClient
+UsersRoutes ..> DbClient
+UsersRoutes ..> EmailClient
+TrainingRoutes ..> DbClient
+TrainingRoutes ..> ContentIslandClient
+StudentCoursesRoutes ..> DbClient
+StudentCoursesRoutes ..> ContentIslandClient
+LessonRoutes ..> ContentIslandClient
+
+UsersRoutes ..> authMiddleware
+UsersRoutes ..> requireAdmin
+TrainingRoutes ..> authMiddleware
+TrainingRoutes ..> requireAdmin
+StudentCoursesRoutes ..> authMiddleware
+LessonRoutes ..> authMiddleware
+
+ContentIslandClient ..> CourseCI : devuelve
+ContentIslandClient ..> LessonCI : devuelve
+
+@enduml

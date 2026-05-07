@@ -12,6 +12,10 @@ import { access } from 'node:fs/promises';
 import { extname, resolve } from 'node:path';
 
 const handler = createStartHandler({ handler: defaultStreamHandler });
+
+// Required for Vite dev-server plugin — it imports this file and calls default.fetch
+export default { fetch: handler };
+
 const PORT = Number(process.env['PORT'] ?? 3000);
 const CLIENT_DIST_DIR = resolve(process.cwd(), 'dist', 'client');
 const API_BASE_URL =
@@ -181,7 +185,7 @@ async function tryProxyApiRequest(
   return true;
 }
 
-createServer(async (req: IncomingMessage, res: ServerResponse) => {
+if (process.env['NODE_ENV'] !== 'development') createServer(async (req: IncomingMessage, res: ServerResponse) => {
   try {
     if (await tryServeClientAsset(req, res)) {
       return;

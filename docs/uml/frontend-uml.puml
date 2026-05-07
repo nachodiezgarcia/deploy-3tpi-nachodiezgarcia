@@ -1,0 +1,221 @@
+@startuml
+title Diagrama de Clases - Frontend (Web)
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+' ==================
+' STATE / STORES
+' ==================
+package "Stores (nanostores)" {
+  class AuthStore <<store>> {
+    +$auth : AuthState | null
+    +set(state) : void
+  }
+
+  class ThemeStore <<store>> {
+    +$theme : "light" | "dark"
+    +toggle() : void
+  }
+
+  class AuthState {
+    +accessToken : string
+    +user : AuthUser
+  }
+
+  class AuthUser {
+    +id : string
+    +name : string
+    +email : string
+    +role : "student" | "admin"
+  }
+}
+
+' ==================
+' ROUTES (TanStack Router)
+' ==================
+package "Routes" {
+  class RootLayout <<layout>> {
+    ' Proveedor de QueryClient y Router
+  }
+
+  class LoginPage <<page>> {
+    ' /login
+  }
+
+  class VerifyPage <<page>> {
+    ' /verify — verificar codigo de email
+  }
+
+  class ActivatePage <<page>> {
+    ' /activate — establecer contraseña
+  }
+
+  class AuthLayout <<layout>> {
+    ' /_auth — protege rutas autenticadas
+    ' Carga sesion con refreshSessionFn
+    ' Contiene AppHeader y FAB del Mentor IA
+  }
+
+  class DashboardPage <<page>> {
+    ' /_auth/dashboard — cursos del estudiante
+  }
+
+  class CoursePage <<page>> {
+    ' /_auth/course/:contentIslandId
+  }
+
+  class LessonPage <<page>> {
+    ' /_auth/lesson/:lessonId
+  }
+
+  class MentorIAPage <<page>> {
+    ' /_auth/mentor-ia
+  }
+
+  class AdminUsersPage <<page>> {
+    ' /_auth/admin/users
+  }
+
+  class AdminUserDetailPage <<page>> {
+    ' /_auth/admin/user/:id
+  }
+
+  class AdminTrainingsPage <<page>> {
+    ' /_auth/admin/trainings
+  }
+
+  class AdminTrainingDetailPage <<page>> {
+    ' /_auth/admin/training/:id
+  }
+}
+
+' ==================
+' PODS (Feature Modules)
+' ==================
+package "Pods" {
+  class AuthPod <<pod>> {
+    +LoginForm
+    +refreshSessionFn() : AuthState | null
+    +logoutFn() : void
+  }
+
+  class CoursesPod <<pod>> {
+    +CourseList
+    +CourseDetailView
+    +getStudentCourses(token) : Course[]
+    +getCourseDetail(id, token) : CourseDetail
+  }
+
+  class LessonPod <<pod>> {
+    +LessonDetailView
+    +getLesson(id, token) : Lesson
+  }
+
+  class TrainingPod <<pod>> {
+    +TrainingList
+    +TrainingDetailView
+    +CreateTrainingForm
+    +getTrainings(token) : Training[]
+    +createTraining(data, token) : void
+    +assignTraining(id, userId, token) : void
+    +unassignTraining(id, userId, token) : void
+  }
+
+  class UsersPod <<pod>> {
+    +UserGrid
+    +UserDetailView
+    +InviteUserForm
+    +getUsers(token) : User[]
+    +getUserDetail(id, token) : UserDetail
+    +inviteUser(data, token) : void
+  }
+
+  class MentorIAPod <<pod>> {
+    +MentorIAView
+    +ChatMessage
+    ' Streaming via OpenRouter API
+    ' Contexto: cursos activos del estudiante
+  }
+}
+
+' ==================
+' COMMON COMPONENTS
+' ==================
+package "Common" {
+  class AppHeader <<component>> {
+    +userName : string
+    +ThemeToggle
+    +onLogout() : void
+  }
+
+  class VideoPlayer <<component>> {
+    +src : string
+    ' Wrapper React sobre player vanilla JS
+  }
+
+  class TextField <<component>> {
+    +name : string
+    +label : string
+    +type : string
+  }
+
+  class PasswordField <<component>> {
+    +name : string
+    +label : string
+  }
+
+  class Notifications <<service>> {
+    +notify.success(msg) : void
+    +notify.error(msg) : void
+  }
+
+  class MarkdownRenderer <<component>> {
+    +content : string
+  }
+}
+
+' ==================
+' RELACIONES
+' ==================
+
+AuthStore *-- AuthState
+AuthState *-- AuthUser
+
+RootLayout *-- LoginPage
+RootLayout *-- VerifyPage
+RootLayout *-- ActivatePage
+RootLayout *-- AuthLayout
+
+AuthLayout *-- DashboardPage
+AuthLayout *-- CoursePage
+AuthLayout *-- LessonPage
+AuthLayout *-- MentorIAPage
+AuthLayout *-- AdminUsersPage
+AuthLayout *-- AdminUserDetailPage
+AuthLayout *-- AdminTrainingsPage
+AuthLayout *-- AdminTrainingDetailPage
+
+LoginPage ..> AuthPod
+DashboardPage ..> CoursesPod
+CoursePage ..> CoursesPod
+LessonPage ..> LessonPod
+MentorIAPage ..> MentorIAPod
+AdminUsersPage ..> UsersPod
+AdminUserDetailPage ..> UsersPod
+AdminTrainingsPage ..> TrainingPod
+AdminTrainingDetailPage ..> TrainingPod
+
+AuthLayout ..> AuthPod : refreshSession
+AuthLayout ..> AppHeader
+
+LessonPod ..> VideoPlayer
+LessonPod ..> MarkdownRenderer
+CoursesPod ..> MarkdownRenderer
+
+AuthPod ..> AuthStore
+AuthPod ..> Notifications
+CoursesPod ..> Notifications
+UsersPod ..> Notifications
+TrainingPod ..> Notifications
+
+@enduml
