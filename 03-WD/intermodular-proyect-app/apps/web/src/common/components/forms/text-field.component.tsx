@@ -58,7 +58,7 @@ export function TextField({
     <form.Field name={name}>
       {(field: AnyFieldApi) => {
         const showError =
-          (field.state.meta.isBlurred || field.state.meta.isTouched) &&
+          (field.state.meta.isBlurred || form.state.submissionAttempts > 0) &&
           field.state.meta.errors.length > 0;
         const errorMessage = showError
           ? String(
@@ -77,7 +77,10 @@ export function TextField({
               name={field.name}
               value={field.state.value ?? ''}
               onChange={(e) => field.handleChange(e.target.value)}
-              onBlur={field.handleBlur}
+              onBlur={() => {
+                field.handleBlur();
+                void field.validate('change');
+              }}
               aria-invalid={showError || undefined}
               aria-describedby={showError ? errorId : undefined}
               className={[styles.input, showError ? styles.inputError : '']
