@@ -102,11 +102,7 @@ export function LoginForm() {
           )}
         </form.Subscribe>
 
-        <p className="text-center text-[13px] text-(--color-link)">
-          <a href="#" className="hover:underline">
-            ¿Olvidaste tú contraseña?
-          </a>
-        </p>
+        <div className="mx-auto rounded-xl h-3.25 w-44 bg-link" />
       </form>
     </div>
   );
