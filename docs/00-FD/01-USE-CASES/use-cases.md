@@ -59,11 +59,9 @@ Tras el login, el admin accede a `/admin`, donde elige entre gestionar usuarios 
 
 **Pantallas:**
 
-![Lista de usuarios](./capturas/admin-users.png)
-
-![Detalle de usuario](./capturas/admin-user-detail.png)
-
-![Formulario invitar usuario](./capturas/admin-user-new.png)
+| ![Lista de usuarios](./capturas/admin-users.png) | ![Detalle de usuario](./capturas/admin-user-detail.png) |
+|---|---|
+| ![Formulario invitar usuario](./capturas/admin-user-new.png) | |
 
 ### Gestión de Trainings
 
@@ -76,11 +74,9 @@ Tras el login, el admin accede a `/admin`, donde elige entre gestionar usuarios 
 
 **Pantallas:**
 
-![Lista de trainings](./capturas/admin-trainings.png)
-
-![Detalle de training](./capturas/admin-training-detail.png)
-
-![Formulario nuevo training](./capturas/admin-training-new.png)
+| ![Lista de trainings](./capturas/admin-trainings.png) | ![Detalle de training](./capturas/admin-training-detail.png) |
+|---|---|
+| ![Formulario nuevo training](./capturas/admin-training-new.png) | |
 
 ### Mentor IA
 
@@ -115,9 +111,9 @@ El registro no es autoservicio: el admin invita al estudiante por email.
 
 **Pantallas:**
 
-![Verificación de email](./capturas/verify.png)
-
-![Activar cuenta](./capturas/activate.png)
+| ![Email de invitación](./capturas/invitation-email.png) | ![Verificación de email](./capturas/verify.png) |
+|---|---|
+| ![Activar cuenta](./capturas/activate.png) | |
 
 ### Aprendizaje
 
@@ -131,11 +127,9 @@ El registro no es autoservicio: el admin invita al estudiante por email.
 
 **Pantallas:**
 
-![Dashboard](./capturas/dashboard.png)
-
-![Detalle de curso](./capturas/course-detail.png)
-
-![Lección](./capturas/lesson.png)
+| ![Dashboard](./capturas/dashboard.png) | ![Detalle de curso](./capturas/course-detail.png) |
+|---|---|
+| ![Lección](./capturas/lesson.png) | |
 
 ### Mentor IA
 
