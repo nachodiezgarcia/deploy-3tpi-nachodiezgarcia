@@ -178,15 +178,14 @@ export function AppHeader({ onLogout, user: userProp }: AppHeaderProps) {
               >
                 <House size={20} />
               </Link>
-            </div>
-            <div className="flex flex-col gap-2">
+            
               {isAdmin && (
                 <Link
                   to={onAdminPanel ? '/dashboard' : '/admin'}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex w-full items-center gap-2 rounded-lg border border-border px-3 py-2 text-[13px] text-tsecondary-500 transition hover:bg-(--surface-elevated)"
+                  className="flex mr-auto items-center gap-2 rounded-lg border border-border px-3 py-2 text-[13px] text-tsecondary-500 transition hover:bg-(--surface-elevated)"
                 >
-                  {onAdminPanel ? 'Cursos' : 'Panel Administrador'}
+                  {onAdminPanel ? 'Cursos' : 'Panel Admin'}
                 </Link>
               )}
               {onLogout && (
@@ -196,7 +195,7 @@ export function AppHeader({ onLogout, user: userProp }: AppHeaderProps) {
                     setMobileMenuOpen(false);
                     onLogout();
                   }}
-                  className="flex w-full cursor-pointer items-center gap-2 rounded-lg border border-border px-3 py-2 text-[13px] text-tsecondary-500 transition hover:bg-(--surface-elevated)"
+                  className="flex ml-auto cursor-pointer items-center gap-2 rounded-lg border border-border px-3 py-2 text-[13px] text-tsecondary-500 transition hover:bg-(--surface-elevated)"
                 >
                   <LogOut size={14} />
                   Cerrar sesión
