@@ -24,6 +24,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { title: 'Intermodular' },
     ],
+    links: [{ rel: 'icon', href: '/favicon.png', type: 'image/png' }],
   }),
   notFoundComponent: () => <NotFoundPage />,
   errorComponent: ({ error, reset }) => (
