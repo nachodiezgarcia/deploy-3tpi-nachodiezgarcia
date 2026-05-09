@@ -1,5 +1,5 @@
 export type { User, UserDetail, InviteUserInput } from './users.types';
-export { getUsers, getUserDetail, inviteUser } from './users.api';
+export { getUsers, getUserDetail, inviteUser, updateUser } from './users.api';
 export {
   UserGrid,
   UserDetailView,

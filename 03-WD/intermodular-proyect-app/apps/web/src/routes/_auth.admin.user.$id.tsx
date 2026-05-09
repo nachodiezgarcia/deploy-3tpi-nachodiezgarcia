@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 import { useStore } from '@nanostores/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { $auth } from '#pods/auth';
-import { getUserDetail, UserDetailView, CourseAssignGrid } from '#pods/users';
+import { getUserDetail, updateUser, UserDetailView, CourseAssignGrid } from '#pods/users';
 import { getTrainings, assignTraining, unassignTraining } from '#pods/training';
 
 export const Route = createFileRoute('/_auth/admin/user/$id')({
@@ -45,6 +45,11 @@ function AdminUserDetailPage() {
     await queryClient.invalidateQueries({ queryKey: ['user', id] });
   };
 
+  const handleUpdateUser = async (name: string) => {
+    await updateUser(id, { name }, auth!.accessToken);
+    await queryClient.invalidateQueries({ queryKey: ['user', id] });
+  };
+
   if (userLoading)
     return <p className="p-8 text-tsecondary-500">Cargando usuario...</p>;
   if (userError || !user)
@@ -52,7 +57,7 @@ function AdminUserDetailPage() {
 
   return (
     <main className="flex flex-1 flex-col items-center gap-5 px-4 py-6 md:px-10 md:py-8">
-      <UserDetailView user={user} />
+      <UserDetailView user={user} onUpdate={handleUpdateUser} />
       <CourseAssignGrid
         trainings={trainings}
         assignedContentIslandIds={user.activeTrainings.map(

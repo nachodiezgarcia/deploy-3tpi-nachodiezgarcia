@@ -11,7 +11,7 @@ import {
   createSignUpUser,
   deleteSignUpUser,
 } from '#pods/auth';
-import { findAllUsers, findUserById } from './users.model';
+import { findAllUsers, findUserById, updateUserById } from './users.model';
 
 const getEnv = createEnvReader(process.env);
 const webOrigin = getEnv('WEB_ORIGIN', { fallback: 'http://localhost:3000' });
@@ -90,6 +90,26 @@ usersRoute.get('/users', async (context) => {
     })),
   );
 });
+
+const updateUserSchema = z.object({ name: z.string().min(1) });
+
+usersRoute.patch(
+  '/users/:id',
+  zValidator('json', updateUserSchema),
+  async (context) => {
+    const id = context.req.param('id');
+    const { name } = context.req.valid('json');
+    const doc = await updateUserById(id, { name });
+    if (!doc) return context.json({ message: 'User not found' }, 404);
+    return context.json({
+      id: doc._id.toString(),
+      name: doc.name,
+      email: doc.email,
+      rol: doc.rol,
+      isActive: doc.isActive,
+    });
+  },
+);
 
 usersRoute.get('/users/:id', async (context) => {
   const id = context.req.param('id');
