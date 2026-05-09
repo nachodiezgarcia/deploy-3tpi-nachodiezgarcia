@@ -1,10 +1,5 @@
 import { createVideoPlayer } from '../../factory/video-player.factory';
 import { DEFAULT_VIDEO_PLAYER_STATE } from '../../video-player.constants';
-import {
-  checkVideoCors,
-  getCorsSolutions,
-  isSameOrigin,
-} from '../../video-player.helpers';
 import type {
   SetVideoPlayerState,
   UIElements,
@@ -58,19 +53,6 @@ export const createVanillaVideoPlayer = (
   let uiController: ReturnType<typeof createUIController> | null = null;
 
   const setupUI = (elements: UIElements) => {
-    if (video.src && !isSameOrigin(video.src)) {
-      checkVideoCors(video.src).then((corsSupported) => {
-        if (!corsSupported) {
-          console.error(
-            'CORS preflight check failed. Video may not load properly.',
-          );
-          console.log('Suggested solutions:', getCorsSolutions(video.src));
-        } else {
-          console.log('CORS appears to be properly configured.');
-        }
-      });
-    }
-
     uiController = createUIController(
       {
         getState,
@@ -121,22 +103,6 @@ export const createVanillaVideoPlayer = (
           const newSrc = video.getAttribute('src');
           if (newSrc) {
             actions.resetStateForNewSource();
-
-            if (!isSameOrigin(newSrc)) {
-              checkVideoCors(newSrc).then((corsSupported) => {
-                if (!corsSupported) {
-                  console.error(
-                    'CORS preflight check failed for new video source.',
-                  );
-                  console.log('Suggested solutions:', getCorsSolutions(newSrc));
-                } else {
-                  console.log(
-                    'CORS appears to be properly configured for new video source.',
-                  );
-                }
-              });
-            }
-
             video.load();
           } else {
             actions.resetToInitialState();
