@@ -81,3 +81,26 @@ El despliegue se gestiona desde este repositorio separado porque la organizació
 | Contenedores | Docker multi-stage |
 | CI/CD | GitHub Actions + GHCR |
 | Hosting | Render |
+
+---
+
+## Enlaces de interés
+
+- [Repositorio de despliegue en GitHub](nachodiezgarcia/deploy-3tpi-nachodiezgarcia)
+- [Aplicación API desplegada con Render](https://deploy-3tpi-nachodiezgarcia.onrender.com)
+- [Aplicación Web desplegada con Render](https://deploy-3tpi-nachodiezgarcia-latest.onrender.com)
+- [Documentación completa en el directorio `/docs`](./docs/)
+- [Apps md](./03-WD/intermodular-proyect-app/apps.md)
+- [API docs](./03-WD/intermodular-proyect-app/apps/api/README.md)
+- [Web docs](./03-WD/intermodular-proyect-app/apps/web/README.md)
+- [PRD](./docs/00-FD/00-PRD/README.md)
+- [Casos de uso](./docs/00-FD/01-USE-CASES/use-cases.md)
+- [Sitemap](./docs/00-FD/02-SITEMAP/SITEMAP.png)
+- [HCMS Model](./docs/00-FD/03-HCMS-MODEL/02-HCMS-MODEL.png)
+- [DB Model](./docs/00-FD/04-DB-MODEL/04-DB-MODEL.png)
+- [UI Mock Low Fidelity](./docs/00-FD/05-UI-MOCK-LOW-FIDELITY/UI-MOCK-LOW-FIDELITY.qm)
+- [UI High Fidelity](./docs/00-FD/06-UI-HIGH-FIDELITY/UI-HIGH-FIDELITY.pen)
+- [Architecture](./docs/00-FD/07-ARCHITECTURE/00-ARCHITECTURE.md)
+- [Technical Design Blueprint](./docs/01-TD/00-BLUEPRINT/BLUEPRINT.md)
+- [Diagrama UML Backend](./docs/uml/backend-uml.puml)
+- [Diagrama UML Frontend](./docs/uml/frontend-uml.puml)
