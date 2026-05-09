@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   createFileRoute,
   Outlet,
@@ -10,13 +11,22 @@ import { AppHeader } from '#common/components/layout';
 
 export const Route = createFileRoute('/_auth')({
   beforeLoad: async () => {
-    const current = $auth.get();
-    if (current) return { session: current };
+    if (typeof window !== 'undefined') {
+      // Client: use cached in-memory atom to avoid redundant token refresh
+      const current = $auth.get();
+      if (current) return { session: current };
+    }
 
+    // Server: skip module-level $auth (shared across requests — stale after logout)
+    // Client with no cached auth: also verify via cookie
     const session = await refreshSessionFn();
     if (!session) throw redirect({ to: '/login' });
 
-    $auth.set(session);
+    // Only update the atom client-side to avoid cross-request contamination on server
+    if (typeof window !== 'undefined') {
+      $auth.set(session);
+    }
+
     return { session };
   },
   component: AuthLayout,
@@ -33,7 +43,22 @@ function AuthLayout() {
     $auth.set(session);
   }
 
+  // Listen for logout events from other tabs so they also redirect to /login
+  useEffect(() => {
+    const bc = new BroadcastChannel('auth');
+    bc.onmessage = (event: MessageEvent) => {
+      if (event.data === 'logout') {
+        $auth.set(null);
+        void navigate({ to: '/login' });
+      }
+    };
+    return () => bc.close();
+  }, [navigate]);
+
   const handleLogout = async () => {
+    const bc = new BroadcastChannel('auth');
+    bc.postMessage('logout');
+    bc.close();
     await logoutFn();
     $auth.set(null);
     await navigate({ to: '/login' });
