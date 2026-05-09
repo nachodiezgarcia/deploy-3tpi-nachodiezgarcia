@@ -6,17 +6,17 @@ const authHeaders = (accessToken: string) => ({
 });
 
 export const getUsers = (accessToken: string): Promise<User[]> =>
-  fetch(`${BASE_URL}/api/users`, { headers: authHeaders(accessToken) }).then((r) =>
-    r.json(),
+  fetch(`${BASE_URL}/api/users`, { headers: authHeaders(accessToken) }).then(
+    (r) => r.json(),
   );
 
 export const getUserDetail = (
   id: string,
   accessToken: string,
 ): Promise<UserDetail> =>
-  fetch(`${BASE_URL}/api/users/${id}`, { headers: authHeaders(accessToken) }).then((r) =>
-    r.json(),
-  );
+  fetch(`${BASE_URL}/api/users/${id}`, {
+    headers: authHeaders(accessToken),
+  }).then((r) => r.json());
 
 export const updateUser = async (
   id: string,
