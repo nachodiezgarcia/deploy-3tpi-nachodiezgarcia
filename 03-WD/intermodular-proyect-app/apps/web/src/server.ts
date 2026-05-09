@@ -59,12 +59,15 @@ async function tryServeClientAsset(
   if (method !== 'GET' && method !== 'HEAD') return false;
 
   const rawPath = req.url?.split('?')[0] ?? '/';
-  if (!rawPath.startsWith('/assets/')) return false;
+  if (rawPath === '/' || rawPath.startsWith('/_server')) return false;
 
   const decodedPath = decodeURIComponent(rawPath);
   const assetPath = resolve(CLIENT_DIST_DIR, `.${decodedPath}`);
 
   if (!assetPath.startsWith(CLIENT_DIST_DIR)) return false;
+
+  const contentType = CONTENT_TYPES[extname(assetPath).toLowerCase()];
+  if (!contentType) return false;
 
   try {
     await access(assetPath);
@@ -72,11 +75,14 @@ async function tryServeClientAsset(
     return false;
   }
 
-  const contentType = CONTENT_TYPES[extname(assetPath).toLowerCase()];
-  if (contentType) {
-    res.setHeader('Content-Type', contentType);
-  }
-  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  res.setHeader('Content-Type', contentType);
+  // Hashed assets (/assets/*) are immutable; public-folder files use a short TTL
+  res.setHeader(
+    'Cache-Control',
+    rawPath.startsWith('/assets/')
+      ? 'public, max-age=31536000, immutable'
+      : 'public, max-age=3600',
+  );
 
   if (method === 'HEAD') {
     res.writeHead(200);
