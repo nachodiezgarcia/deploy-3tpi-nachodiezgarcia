@@ -26,6 +26,13 @@ function AuthLayout() {
   const navigate = useNavigate();
   const { session } = Route.useRouteContext();
 
+  // On page refresh, TanStack Start dehydrates the beforeLoad result from SSR
+  // without re-running it on the client, so $auth stays null. Sync it here
+  // (parent renders before children, so child queries see the correct value).
+  if (!$auth.get() && session) {
+    $auth.set(session);
+  }
+
   const handleLogout = async () => {
     await logoutFn();
     $auth.set(null);

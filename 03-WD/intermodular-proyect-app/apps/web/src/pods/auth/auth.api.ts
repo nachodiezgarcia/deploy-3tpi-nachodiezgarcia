@@ -2,7 +2,7 @@ import { createServerFn } from '@tanstack/react-start';
 import { getCookie, deleteCookie } from '@tanstack/react-start/server';
 import type { AuthState } from './auth.store';
 
-const API = process.env['PUBLIC_API_BASE_URL'] ?? 'http://localhost:4000';
+const API = process.env['PUBLIC_API_BASE_URL'] || 'http://localhost:4000';
 
 export const refreshSessionFn = createServerFn({ method: 'GET' }).handler(
   async (): Promise<AuthState | null> => {
