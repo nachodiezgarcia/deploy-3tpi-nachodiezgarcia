@@ -2,12 +2,19 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 import { Sun, Moon } from 'lucide-react';
 import { useStore } from '@nanostores/react';
 import { $theme, toggleTheme } from '#common/theme';
-import { $auth, LoginForm } from '#pods/auth';
+import { $auth, LoginForm, refreshSessionFn } from '#pods/auth';
 
 export const Route = createFileRoute('/login')({
-  beforeLoad: () => {
-    const auth = $auth.get();
-    if (auth) throw redirect({ to: '/' });
+  beforeLoad: async () => {
+    if (typeof window !== 'undefined') {
+      // Client: use in-memory atom (correctly set/cleared by auth flows)
+      if ($auth.get()) throw redirect({ to: '/' });
+      return;
+    }
+    // Server: $auth is a module-level singleton shared across all requests —
+    // it retains the previous user's session after logout. Always verify via cookie.
+    const session = await refreshSessionFn();
+    if (session) throw redirect({ to: '/' });
   },
   component: LoginPage,
 });
