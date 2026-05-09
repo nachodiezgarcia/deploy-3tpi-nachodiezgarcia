@@ -182,7 +182,6 @@ export function CourseDetailView({ course }: { course: CourseDetail }) {
             ) : (
               <Markdown
                 content={course.description}
-                className="prose prose-sm max-w-none text-tsecondary-500"
               />
             )}
           </div>
