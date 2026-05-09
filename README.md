@@ -11,7 +11,8 @@ El código fuente del proyecto está en el repositorio principal: **[politecnico
 - **Backend (API):** https://deploy-3tpi-nachodiezgarcia.onrender.com
 - **Frontend (Web):** https://deploy-3tpi-nachodiezgarcia-latest.onrender.com
 
-> El servidor de Render en el plan gratuito puede tardar hasta 50 segundos en responder en el primer acceso (cold start).
+> Antes del 09/05 => El servidor de Render en el plan gratuito puede tardar hasta 50 segundos en responder en el primer acceso (cold start).
+> Después del 09/05 => El servidor de Render en el plan de pago responde en menos de 1 segundo incluso en el primer acceso.
 
 ---
 
