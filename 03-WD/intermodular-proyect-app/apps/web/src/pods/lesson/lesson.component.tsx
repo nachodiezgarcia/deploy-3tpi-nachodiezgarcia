@@ -134,9 +134,7 @@ export function LessonDetailView({
 
       {(lesson.description || lesson.view) && (
         <div className="mt-4 flex-1 border-t border-border bg-surface px-5 py-5 md:px-10">
-          {lesson.description && (
-            <Markdown content={lesson.description} />
-          )}
+          {lesson.description && <Markdown content={lesson.description} />}
           {lesson.view && (
             <div className={lesson.description ? 'mt-6' : ''}>
               <Markdown content={lesson.view} />

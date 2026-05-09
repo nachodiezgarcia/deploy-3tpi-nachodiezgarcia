@@ -2,7 +2,12 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 import { useStore } from '@nanostores/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { $auth } from '#pods/auth';
-import { getUserDetail, updateUser, UserDetailView, CourseAssignGrid } from '#pods/users';
+import {
+  getUserDetail,
+  updateUser,
+  UserDetailView,
+  CourseAssignGrid,
+} from '#pods/users';
 import { getTrainings, assignTraining, unassignTraining } from '#pods/training';
 
 export const Route = createFileRoute('/_auth/admin/user/$id')({

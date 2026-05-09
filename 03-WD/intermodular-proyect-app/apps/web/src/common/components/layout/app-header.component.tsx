@@ -163,7 +163,9 @@ export function AppHeader({ onLogout, user: userProp }: AppHeaderProps) {
               <button
                 type="button"
                 aria-label={
-                  theme === 'light' ? 'Activar modo oscuro' : 'Activar modo claro'
+                  theme === 'light'
+                    ? 'Activar modo oscuro'
+                    : 'Activar modo claro'
                 }
                 onClick={toggleTheme}
                 className="flex cursor-pointer items-center text-tsecondary-500 transition-colors hover:text-tbase-500"
@@ -178,7 +180,7 @@ export function AppHeader({ onLogout, user: userProp }: AppHeaderProps) {
               >
                 <House size={20} />
               </Link>
-            
+
               {isAdmin && (
                 <Link
                   to={onAdminPanel ? '/dashboard' : '/admin'}
