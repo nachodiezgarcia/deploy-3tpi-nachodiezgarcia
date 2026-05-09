@@ -167,14 +167,35 @@ export function InviteUserForm({
   );
 }
 
-export function UserDetailView({ user }: { user: UserDetail }) {
+export function UserDetailView({
+  user,
+  onUpdate,
+}: {
+  user: UserDetail;
+  onUpdate?: (name: string) => Promise<void>;
+}) {
   const linkedLink =
     typeof window !== 'undefined'
       ? `${window.location.origin}/dashboard`
       : '/dashboard';
 
+  const [editing, setEditing] = useState(false);
+  const [nameValue, setNameValue] = useState(user.name);
+  const [saving, setSaving] = useState(false);
+
   const handleCopy = () => {
     navigator.clipboard.writeText(linkedLink);
+  };
+
+  const handleAccept = async () => {
+    if (!onUpdate) return;
+    setSaving(true);
+    try {
+      await onUpdate(nameValue);
+      setEditing(false);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -195,16 +216,38 @@ export function UserDetailView({ user }: { user: UserDetail }) {
 
       <div className="flex flex-col gap-4 p-4 md:flex-row md:items-end md:gap-5 md:p-7">
         <div className="flex flex-1 flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <span className="text-[13px] font-semibold text-tbase-500">
-              Nombre
-            </span>
-            <div
-              className="rounded-lg border border-border px-3.5 py-2.5 text-[14px] text-tsecondary-500"
-              style={{ backgroundColor: 'var(--surface-elevated)' }}
-            >
-              {user.name}
+          <div className="flex items-end gap-2">
+            <div className="flex flex-1 flex-col gap-1.5">
+              <span className="text-[13px] font-semibold text-tbase-500">
+                Nombre
+              </span>
+              {editing ? (
+                <input
+                  className="h-10 w-full rounded-lg border border-border bg-surface-elevated px-3.5 text-[14px] text-tbase-500 outline-none transition focus:border-(--color-accent) focus:ring-2 focus:ring-(--color-accent)/20"
+                  value={nameValue}
+                  onChange={(e) => setNameValue(e.target.value)}
+                  autoFocus
+                />
+              ) : (
+                <div
+                  className="rounded-lg border border-border px-3.5 py-2.5 text-[14px] text-tsecondary-500"
+                  style={{ backgroundColor: 'var(--surface-elevated)' }}
+                >
+                  {user.name}
+                </div>
+              )}
             </div>
+            {editing && (
+              <button
+                type="button"
+                disabled={nameValue === user.name || saving}
+                onClick={handleAccept}
+                className="flex h-10 cursor-pointer items-center gap-2 rounded-lg bg-(--btn-primary-bg) px-4 text-[13px] font-semibold text-(--btn-primary-text) transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <Check size={14} />
+                {saving ? '...' : 'Aceptar'}
+              </button>
+            )}
           </div>
 
           <div className="flex flex-col gap-1.5">
@@ -245,10 +288,14 @@ export function UserDetailView({ user }: { user: UserDetail }) {
         <div className="flex justify-end md:self-end">
           <button
             type="button"
-            className="flex items-center gap-2 rounded-lg bg-(--btn-primary-bg) px-6 py-2.5 text-[14px] font-semibold text-(--btn-primary-text) transition hover:brightness-95"
+            onClick={() => {
+              setNameValue(user.name);
+              setEditing((v) => !v);
+            }}
+            className="flex cursor-pointer items-center gap-2 rounded-lg bg-(--btn-primary-bg) px-6 py-2.5 text-[14px] font-semibold text-(--btn-primary-text) transition hover:brightness-95"
           >
             <Pencil size={15} />
-            Editar
+            {editing ? 'Cancelar' : 'Editar'}
           </button>
         </div>
       </div>
@@ -341,7 +388,7 @@ export function CourseAssignGrid({
                       type="button"
                       disabled={isLoading}
                       onClick={() => handle(onUnassign, t.id)}
-                      className="rounded-md border border-border bg-surface px-2 py-1 text-[12px] font-semibold text-tsecondary-500 transition hover:border-red-400 hover:text-red-400 disabled:opacity-60"
+                      className="cursor-pointer rounded-md border border-border bg-surface px-2 py-1 text-[12px] font-semibold text-tsecondary-500 transition hover:border-red-400 hover:text-red-400 disabled:opacity-60"
                     >
                       {isLoading ? '...' : 'Quitar'}
                     </button>
@@ -351,7 +398,7 @@ export function CourseAssignGrid({
                     type="button"
                     disabled={isLoading}
                     onClick={() => handle(onAssign, t.id)}
-                    className="shrink-0 rounded-md bg-(--btn-primary-bg) px-2.5 py-1 text-[12px] font-semibold text-(--btn-primary-text) transition hover:brightness-95 disabled:opacity-60"
+                    className="cursor-pointer shrink-0 rounded-md bg-(--btn-primary-bg) px-2.5 py-1 text-[12px] font-semibold text-(--btn-primary-text) transition hover:brightness-95 disabled:opacity-60"
                   >
                     {isLoading ? '...' : 'Asignar'}
                   </button>

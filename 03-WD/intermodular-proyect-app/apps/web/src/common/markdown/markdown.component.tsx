@@ -14,7 +14,7 @@ export const Markdown = ({ content, className = '' }: MarkdownProps) => {
 
   return (
     <div
-      className={`markdown-content ${className}`}
+      className={`marked ${className}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

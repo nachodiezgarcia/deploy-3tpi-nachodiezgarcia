@@ -304,7 +304,7 @@ export function TrainingDetailView({
               <button
                 type="submit"
                 disabled={updateLoading}
-                className="flex items-center gap-2 rounded-lg bg-(--btn-primary-bg) px-6 py-2.5 text-[14px] font-semibold text-(--btn-primary-text) transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex cursor-pointer items-center gap-2 rounded-lg bg-(--btn-primary-bg) px-6 py-2.5 text-[14px] font-semibold text-(--btn-primary-text) transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Pencil size={15} />
                 {updateLoading ? 'Guardando...' : 'Editar'}
@@ -353,7 +353,7 @@ export function TrainingDetailView({
               <button
                 type="submit"
                 disabled={assignLoading}
-                className="flex items-center gap-2 rounded-lg bg-(--btn-primary-bg) px-6 py-2.5 text-[14px] font-semibold text-(--btn-primary-text) transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex cursor-pointer items-center gap-2 rounded-lg bg-(--btn-primary-bg) px-6 py-2.5 text-[14px] font-semibold text-(--btn-primary-text) transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <UserPlus size={15} />
                 {assignLoading ? 'Asignando...' : 'Asignar'}

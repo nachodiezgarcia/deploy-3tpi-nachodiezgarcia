@@ -16,6 +16,7 @@ export function AppHeader({ onLogout, user: userProp }: AppHeaderProps) {
   const user = userProp ?? authStore?.user;
   const homeRoute = user?.role === 'admin' ? '/admin' : '/dashboard';
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isAdmin = user?.role === 'admin';
   const onAdminPanel = location.pathname.startsWith('/admin');
@@ -140,12 +141,76 @@ export function AppHeader({ onLogout, user: userProp }: AppHeaderProps) {
 
         <button
           type="button"
-          aria-label="Abrir menú"
+          aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          onClick={() => setMobileMenuOpen((v) => !v)}
           className="cursor-pointer text-tbase-500"
         >
           <Menu size={24} />
         </button>
       </header>
+
+      {mobileMenuOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-30 md:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div
+            className="relative z-40 flex md:hidden flex-col gap-3 border-b border-border px-5 py-4"
+            style={{ backgroundColor: 'var(--bg-card)' }}
+          >
+            <div className="flex items-center gap-5">
+              <button
+                type="button"
+                aria-label={
+                  theme === 'light'
+                    ? 'Activar modo oscuro'
+                    : 'Activar modo claro'
+                }
+                onClick={toggleTheme}
+                className="flex cursor-pointer items-center text-tsecondary-500 transition-colors hover:text-tbase-500"
+              >
+                {theme === 'light' ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+              <Link
+                to={homeRoute}
+                aria-label="Inicio"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center text-tsecondary-500 transition-colors hover:text-tbase-500"
+              >
+                <House size={20} />
+              </Link>
+
+              {isAdmin && (
+                <Link
+                  to={onAdminPanel ? '/dashboard' : '/admin'}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex mr-auto items-center gap-2 rounded-lg border border-border px-3 py-2 text-[13px] text-tsecondary-500 transition hover:bg-(--surface-elevated)"
+                >
+                  {onAdminPanel ? 'Cursos' : 'Panel Admin'}
+                </Link>
+              )}
+              {onLogout && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onLogout();
+                  }}
+                  className="flex ml-auto cursor-pointer items-center gap-2 rounded-lg border border-border px-3 py-2 text-[13px] text-tsecondary-500 transition hover:bg-(--surface-elevated)"
+                >
+                  <LogOut size={14} />
+                  Cerrar sesión
+                </button>
+              )}
+            </div>
+            <div className="flex flex-col gap-0.5 text-[12px] text-tsecondary-500">
+              <span className="font-semibold text-tbase-500">{user?.name}</span>
+              <span className="truncate">{user?.email}</span>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

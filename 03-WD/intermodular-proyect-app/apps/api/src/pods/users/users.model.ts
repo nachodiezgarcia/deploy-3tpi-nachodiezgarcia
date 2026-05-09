@@ -14,3 +14,10 @@ export const findUserById = (id: string) =>
 
 export const createUser = (data: Omit<UserDoc, '_id'>) =>
   users().insertOne(data as UserDoc);
+
+export const updateUserById = (id: string, data: { name: string }) =>
+  users().findOneAndUpdate(
+    { _id: new ObjectId(id) },
+    { $set: data },
+    { returnDocument: 'after', projection: { password: 0 } },
+  );
